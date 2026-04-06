@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KingCretot Experience — SAT Prep Week 3A: Linear & Quadratic Mastery</title>
+<script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+<style>
+:root{
+  --or:#FF9900;--bl:#0047BA;--rd:#DB2F30;--dk:#0d1b3e;--bg:#eef2fb;
+  --wh:#fff;--txt:#1a1a2e;--mut:#5a6080;--ok:#16a34a;--err:#dc2626;--pur:#7c3aed;
+  --tl:#0891b2;--amber:#d97706;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--txt);font-size:17px;line-height:1.6;}
+#ccanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;}
+#bomb{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);z-index:1000;text-align:center;pointer-events:none;transition:transform .2s;}
+#bomb.show{transform:translate(-50%,-50%) scale(1);}
+.bomb-e{font-size:6rem;}.boom-t{font-size:2rem;font-weight:900;color:var(--rd);margin-top:12px;animation:bscale .4s;}
+@keyframes bscale{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+.hdr{background:var(--dk);padding:12px 28px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:300;box-shadow:0 3px 20px rgba(0,71,186,.55);}
+.hdr-logo-wrap{background:rgba(255,255,255,.08);border-radius:10px;padding:6px 10px;display:flex;align-items:center;border:1px solid rgba(255,153,0,.35);}
+.hdr-kc{width:52px;height:52px;background:linear-gradient(135deg,var(--or),var(--bl));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:900;color:#fff;}
+.hdr-text h1{font-size:1rem;font-weight:800;color:var(--or);letter-spacing:1.2px;text-transform:uppercase;line-height:1.2;}
+.hdr-text p{font-size:.78rem;color:#94a3c0;margin-top:2px;}
+.hdr-prog{margin-left:auto;text-align:right;min-width:200px;}
+.hdr-prog-lbl{color:#94a3c0;font-size:.78rem;margin-bottom:5px;}
+.prog-bar{width:200px;height:10px;background:#1e3a6e;border-radius:5px;overflow:hidden;margin-left:auto;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--or),var(--rd));border-radius:5px;transition:width .5s;}
+.nav{background:var(--bl);display:flex;overflow-x:auto;}
+.tab{padding:13px 18px;color:rgba(255,255,255,.6);font-size:.85rem;font-weight:700;cursor:pointer;border-bottom:4px solid transparent;white-space:nowrap;transition:all .2s;user-select:none;letter-spacing:.3px;}
+.tab:hover{color:#fff;background:rgba(255,255,255,.1);}
+.tab.on{color:var(--or);border-bottom-color:var(--or);background:rgba(255,153,0,.1);}
+.tab.done{color:var(--ok);border-bottom-color:var(--ok);}
+.wrap{max-width:1180px;margin:0 auto;padding:32px 24px 100px;}
+.pane{display:none;}.pane.on{display:block;}
+.hero{background:linear-gradient(135deg,var(--dk),#0d3080);border-radius:18px;padding:36px 40px;margin-bottom:28px;color:#fff;border-left:7px solid var(--or);}
+.hero .badge{display:inline-block;background:var(--or);color:#fff;font-size:.7rem;font-weight:800;padding:5px 13px;border-radius:20px;margin-bottom:13px;text-transform:uppercase;letter-spacing:1.2px;}
+.hero h2{font-size:1.9rem;font-weight:900;margin-bottom:10px;}
+.hero p{color:rgba(255,255,255,.85);font-size:1rem;line-height:1.7;}
+.card{background:var(--wh);border-radius:14px;padding:26px 30px;margin-bottom:22px;box-shadow:0 2px 12px rgba(0,71,186,.07);border:1px solid #dde5f4;}
+.card h3{font-size:1.15rem;font-weight:800;color:var(--bl);margin-bottom:14px;display:flex;align-items:center;gap:9px;}
+.card p,.card li{font-size:1rem;line-height:1.75;color:var(--txt);}
+.card ul,.card ol{padding-left:24px;}.card li{margin-bottom:8px;}
+.tip{background:linear-gradient(135deg,#fff7ed,#fff0d6);border-left:5px solid var(--or);border-radius:0 10px 10px 0;padding:15px 20px;margin:14px 0;font-size:1rem;}
+.tip strong{color:var(--or);}
+.trk{background:linear-gradient(135deg,#eff6ff,#dbeafe);border-left:5px solid var(--bl);border-radius:0 10px 10px 0;padding:15px 20px;margin:14px 0;font-size:1rem;}
+.trk strong{color:var(--bl);}
+.hck{background:linear-gradient(135deg,#fff1f2,#fee2e2);border-left:5px solid var(--rd);border-radius:0 10px 10px 0;padding:15px 20px;margin:14px 0;font-size:1rem;}
+.hck strong{color:var(--rd);}
+.pur{background:linear-gradient(135deg,#f5f3ff,#ede9fe);border-left:5px solid var(--pur);border-radius:0 10px 10px 0;padding:15px 20px;margin:14px 0;font-size:1rem;}
+.pur strong{color:var(--pur);}
+.grn{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-left:5px solid var(--ok);border-radius:0 10px 10px 0;padding:15px 20px;margin:14px 0;font-size:1rem;}
+.grn strong{color:var(--ok);}
+.teal{background:linear-gradient(135deg,#ecfeff,#cffafe);border-left:5px solid var(--tl);border-radius:0 10px 10px 0;padding:15px 20px;margin:14px 0;font-size:1rem;}
+.teal strong{color:var(--tl);}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
+@media(max-width:640px){.g3,.g2{grid-template-columns:1fr;}}
+.sc{border-radius:14px;padding:22px 14px;text-align:center;color:#fff;}
+.sc.blue{background:var(--bl);}.sc.red{background:var(--rd);}.sc.grn-bg{background:#15803d;}.sc.gold{background:#b45309;}
+.sc .n{font-size:2.8rem;font-weight:900;color:var(--or);line-height:1;}
+.sc.grn-bg .n,.sc.gold .n{color:#fde68a;}
+.sc .l{font-size:.88rem;opacity:.85;margin-top:6px;}
+/* FORMULA BOXES */
+.fbox{background:var(--dk);border-radius:12px;padding:18px 24px;margin:14px 0;border-left:5px solid var(--or);}
+.fbox .f{font-size:1.1rem;color:var(--or);font-weight:700;font-family:'Courier New',monospace;line-height:1.7;}
+.fbox .d{font-size:.88rem;color:#94a3c0;margin-top:8px;line-height:1.5;}
+.fbox .when{font-size:.85rem;color:#7dd3fc;margin-top:6px;line-height:1.5;}
+/* FORMULA DECISION TABLE */
+.fdecision{border-radius:12px;overflow:hidden;margin:16px 0;border:2px solid #c0d0f5;}
+.fdecision-hdr{background:var(--bl);color:#fff;padding:12px 18px;font-weight:800;font-size:.9rem;}
+.fdecision table{width:100%;border-collapse:collapse;}
+.fdecision td,.fdecision th{padding:11px 14px;border-bottom:1px solid #dde5f4;font-size:.94rem;}
+.fdecision th{background:#f1f5f9;color:var(--bl);font-weight:800;}
+.fdecision tr:last-child td{border-bottom:none;}
+/* QBLOCK */
+.qblock{background:var(--wh);border:2px solid #dde5f4;border-radius:14px;padding:26px 30px;margin:22px 0;transition:border-color .3s;}
+.qblock.ok{border-color:var(--ok);background:#f0fdf4;}
+.qblock.bad{border-color:var(--err);background:#fff5f5;}
+.qnum{font-size:.76rem;font-weight:800;color:var(--or);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px;}
+.qtxt{font-size:1.05rem;font-weight:600;margin-bottom:18px;line-height:1.7;}
+.formula-hint{background:linear-gradient(135deg,#0d1b3e,#12206e);border:1.5px solid var(--or);border-radius:10px;padding:12px 18px;margin-bottom:16px;font-size:.92rem;color:#fde68a;font-family:'Courier New',monospace;line-height:1.6;}
+.formula-hint::before{content:"📐 Formula Hint: ";color:var(--or);font-weight:800;font-family:'Segoe UI',Arial,sans-serif;}
+.opts{display:flex;flex-direction:column;gap:10px;}
+.opt{background:#f1f5f9;border:2px solid #dde5f4;border-radius:10px;padding:14px 18px;text-align:left;cursor:pointer;font-size:1rem;display:flex;align-items:center;gap:12px;transition:all .2s;}
+.opt:hover:not(:disabled){background:#e0e9ff;border-color:var(--bl);}
+.opt.correct{background:#dcfce7;border-color:var(--ok);color:#15803d;font-weight:700;}
+.opt.wrong{background:#fee2e2;border-color:var(--err);color:#b91c1c;}
+.opt:disabled{cursor:not-allowed;}
+.lt{background:var(--bl);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;flex-shrink:0;}
+.opt.correct .lt{background:var(--ok);}.opt.wrong .lt{background:var(--err);}
+.exp{background:#fffbeb;border:1px solid #fed7aa;border-radius:10px;padding:16px 20px;margin-top:15px;display:none;font-size:.95rem;line-height:1.8;}
+.exp.show{display:block;}.et{font-weight:800;color:var(--or);margin-bottom:8px;font-size:1rem;}
+.exp-steps{background:#f8faff;border-left:4px solid var(--bl);border-radius:0 10px 10px 0;padding:14px 18px;margin:10px 0;font-size:.93rem;line-height:2;}
+.exp-wrong{background:#fff1f2;border-left:4px solid var(--rd);border-radius:0 10px 10px 0;padding:12px 16px;margin:8px 0;font-size:.9rem;color:#7f1d1d;}
+.bnav{display:flex;align-items:center;justify-content:space-between;margin-top:36px;padding-top:24px;border-top:2px solid #dde5f4;flex-wrap:wrap;gap:12px;}
+.bnav-btn{padding:14px 28px;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;transition:all .25s;}
+.bnav-prev{background:#e2e8f5;color:var(--bl);}
+.bnav-next{background:var(--bl);color:#fff;}
+.bnav-exam{background:linear-gradient(135deg,var(--or),#e08800);color:#fff;}
+.bnav-btn:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,71,186,.3);}
+.bnav-info{font-size:.9rem;color:var(--mut);font-weight:600;}
+/* GRAPH WRAPPER */
+.graph-wrap{background:var(--wh);border:2px solid #dde5f4;border-radius:14px;overflow:hidden;margin:20px 0;}
+.graph-hdr{background:var(--bl);color:#fff;padding:12px 20px;font-size:.9rem;font-weight:800;display:flex;align-items:center;gap:10px;}
+.graph-controls{padding:14px 20px;background:#f1f5f9;display:flex;flex-wrap:wrap;gap:10px;align-items:center;border-bottom:1px solid #dde5f4;}
+.graph-controls label{font-size:.9rem;font-weight:700;color:var(--bl);}
+.graph-controls input[type=text]{padding:8px 12px;border:2px solid #c0d0f5;border-radius:8px;font-size:.95rem;font-family:'Courier New',monospace;width:200px;}
+.graph-controls button{padding:9px 20px;background:var(--bl);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:.9rem;}
+.graph-controls button:hover{background:#0034a0;}
+.graph-body{padding:8px 16px 16px;}
+/* STEP GRID */
+.step-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+@media(max-width:640px){.step-grid{grid-template-columns:1fr;}}
+.step-box{background:#f4f7ff;border:2px solid #c0d0f5;border-radius:12px;padding:18px;}
+.step-num{background:var(--bl);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.9rem;margin-bottom:10px;}
+.step-box h4{font-size:.95rem;font-weight:800;color:var(--bl);margin-bottom:6px;}
+.step-box p{font-size:.92rem;line-height:1.6;}
+table{width:100%;border-collapse:collapse;font-size:.97rem;}
+th{background:var(--bl);color:#fff;padding:11px 14px;text-align:left;font-size:.88rem;}
+td{padding:11px 14px;border-bottom:1px solid #dde5f4;}
+tr:nth-child(even) td{background:#f1f5f9;}
+/* VOCAB */
+.vcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:14px;margin-top:20px;}
+.vc{background:var(--wh);border:2px solid #dde5f4;border-radius:12px;padding:18px;cursor:pointer;transition:all .25s;min-height:90px;display:flex;flex-direction:column;justify-content:center;}
+.vc:hover{border-color:var(--bl);box-shadow:0 4px 16px rgba(0,71,186,.15);transform:translateY(-2px);}
+.vc.flip{background:var(--dk);border-color:var(--or);}
+.vw{font-size:1.05rem;font-weight:800;color:var(--bl);}
+.vp{font-size:.75rem;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;margin-top:3px;}
+.vd{font-size:.9rem;color:#fff;line-height:1.5;display:none;}
+.ve{font-size:.82rem;color:#94a3c0;font-style:italic;display:none;margin-top:6px;}
+.vc.flip .vw{color:var(--or);}.vc.flip .vd,.vc.flip .ve{display:block;}.vc.flip .vp{color:#94a3c0;}
+/* FILL IN BLANK */
+.fib-q{background:var(--wh);border:2px solid #dde5f4;border-radius:12px;padding:22px 26px;margin:14px 0;}
+.fib-q .fib-sent{font-size:1.05rem;line-height:2.1;margin-bottom:14px;}
+.fib-blank{display:inline-block;min-width:140px;border-bottom:3px solid var(--bl);padding:0 8px;font-weight:700;color:var(--bl);font-size:1rem;}
+.fib-select{padding:6px 10px;border:2px solid var(--bl);border-radius:8px;font-size:.95rem;font-weight:700;color:var(--bl);background:var(--wh);cursor:pointer;margin:0 4px;}
+.fib-check{padding:9px 20px;background:var(--bl);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:.9rem;margin-top:10px;}
+.fib-result{margin-top:10px;padding:10px 14px;border-radius:8px;font-size:.93rem;display:none;}
+.fib-result.ok{background:#dcfce7;color:#15803d;display:block;}
+.fib-result.bad{background:#fee2e2;color:#b91c1c;display:block;}
+/* ANALOGY */
+.analogy-q{background:linear-gradient(135deg,#fffff5,#fef9e7);border:2px solid #fbbf24;border-radius:12px;padding:22px 26px;margin:14px 0;}
+.analogy-stem{font-size:1.1rem;font-weight:800;color:var(--dk);margin-bottom:14px;font-family:'Courier New',monospace;letter-spacing:.5px;}
+/* SYNONYM MATCH */
+.syn-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+.syn-col-hdr{font-weight:800;color:var(--bl);margin-bottom:10px;font-size:.9rem;text-transform:uppercase;letter-spacing:.5px;}
+.syn-item{padding:12px 16px;border:2px solid #dde5f4;border-radius:10px;cursor:pointer;font-size:1rem;transition:all .18s;margin-bottom:8px;background:var(--wh);}
+.syn-item:hover{border-color:var(--bl);background:#e0e9ff;}
+.syn-item.selected{border-color:var(--pur);background:#f5f3ff;color:var(--pur);font-weight:700;}
+.syn-item.matched{border-color:var(--ok);background:#dcfce7;color:#15803d;font-weight:700;pointer-events:none;}
+.syn-item.syn-wrong{border-color:var(--err);background:#fee2e2;animation:shake .3s;}
+@keyframes shake{0%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}100%{transform:translateX(0)}}
+/* EXAM */
+.exam-hdr{background:linear-gradient(135deg,var(--dk),#12206e);border-radius:16px;padding:28px 32px;margin-bottom:24px;color:#fff;text-align:center;}
+.exam-hdr h2{font-size:1.55rem;color:var(--or);font-weight:900;margin-bottom:10px;}
+.etimer{font-size:2.8rem;font-weight:900;font-family:monospace;letter-spacing:3px;color:var(--or);}
+.etimer.warn{color:var(--rd);animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.exam-progress{font-size:.85rem;color:#94a3c0;margin-top:8px;}
+.ss{text-align:center;padding:48px 24px;}
+.ss h2{font-size:2rem;font-weight:900;color:var(--or);margin-bottom:16px;}
+.ss p{color:var(--mut);font-size:1.05rem;margin-bottom:24px;max-width:560px;margin-left:auto;margin-right:auto;}
+.ss .big-btn{padding:18px 48px;background:linear-gradient(135deg,var(--or),#e08800);color:#fff;border:none;border-radius:14px;font-size:1.15rem;font-weight:900;cursor:pointer;transition:all .25s;}
+.ss .big-btn:hover{transform:translateY(-3px);box-shadow:0 6px 24px rgba(255,153,0,.5);}
+.res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:24px 0;}
+.res-card{background:var(--wh);border-radius:14px;padding:20px;text-align:center;border:2px solid #dde5f4;}
+.res-card .res-score{font-size:2.2rem;font-weight:900;color:var(--bl);}
+.res-card .res-lbl{font-size:.85rem;color:var(--mut);margin-top:4px;}
+.reco-item{background:var(--wh);border-radius:12px;padding:16px 20px;margin-bottom:12px;border-left:4px solid var(--or);box-shadow:0 2px 8px rgba(0,71,186,.06);}
+.divider{height:3px;background:linear-gradient(90deg,var(--or),var(--bl),var(--rd));border-radius:3px;margin:28px 0;}
+/* INTERACTIVE DEMO TOGGLE */
+.demo-btn{padding:9px 20px;border-radius:8px;border:2px solid;font-weight:700;cursor:pointer;font-size:.9rem;transition:all .18s;margin:4px;}
+.demo-btn.active{background:var(--bl);color:#fff;border-color:var(--bl);}
+.demo-btn:not(.active){background:var(--wh);color:var(--bl);border-color:var(--bl);}
+.demo-btn:hover:not(.active){background:#e0e9ff;}
+/* FORMULA CARD GRID */
+.fcard-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+@media(max-width:700px){.fcard-grid{grid-template-columns:1fr;}}
+.fcard{background:var(--dk);border-radius:14px;padding:20px 22px;border:2px solid rgba(255,153,0,.3);transition:all .25s;cursor:pointer;}
+.fcard:hover{border-color:var(--or);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.3);}
+.fcard.expanded{border-color:var(--or);background:#0d2a5a;}
+.fcard-title{font-size:1rem;font-weight:800;color:var(--or);margin-bottom:6px;}
+.fcard-formula{font-family:'Courier New',monospace;font-size:1rem;color:#fff;margin-bottom:8px;}
+.fcard-body{display:none;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,153,0,.25);}
+.fcard.expanded .fcard-body{display:block;}
+.fcard-body p{font-size:.88rem;color:#94a3c0;line-height:1.6;margin-bottom:8px;}
+.fcard-when{font-size:.85rem;color:#7dd3fc;font-weight:700;}
+.fcard-example{background:rgba(255,153,0,.1);border-radius:8px;padding:10px 14px;margin-top:8px;font-size:.88rem;color:#fde68a;font-family:'Courier New',monospace;}
+</style>
+</head>
+<body>
+<canvas id="ccanvas"></canvas>
+<div id="bomb"><div class="bomb-e">💣</div><div class="boom-t">💥 Wrong — Let's Fix It!</div></div>
+
+<header class="hdr">
+  <div class="hdr-logo-wrap"><div class="hdr-kc">KC</div></div>
+  <div class="hdr-text">
+    <h1>KingCretot Experience</h1>
+    <p>SAT Prep — Week 3A &bull; Mariah &bull; Linear &amp; Quadratic Deep Mastery</p>
+  </div>
+  <div class="hdr-prog">
+    <div class="hdr-prog-lbl" id="xp-label">0 XP &bull; ⭐ 0</div>
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+</header>
+
+<nav class="nav">
+  <div class="tab on" data-sec="formulas">📐 Formula Guide</div>
+  <div class="tab" data-sec="linear">📈 Linear Mastery</div>
+  <div class="tab" data-sec="quadratic">🔢 Quadratic Mastery</div>
+  <div class="tab" data-sec="graphs">🖥️ Graph Lab</div>
+  <div class="tab" data-sec="vocab">📚 Vocabulary</div>
+  <div class="tab" data-sec="exam">✏️ Mini SAT 3A</div>
+  <div class="tab" data-sec="results">🏆 Results</div>
+</nav>
+
+<main class="wrap">
+
+<!-- ══════════════════════════════════════════════════════
+     SECTION 1: FORMULA GUIDE
+══════════════════════════════════════════════════════ -->
+<div id="pane-formulas" class="pane on">
+  <div class="hero">
+    <div class="badge">Week 3A — Building on Week 3</div>
+    <h2>📐 Complete Formula Guide: When &amp; How to Use Each One</h2>
+    <p>Week 3 gave you all the tools. Week 3A teaches you <strong>exactly when to reach for each one</strong>. Click any formula card to expand the full strategy — including SAT-specific use cases and worked examples.</p>
+  </div>
+
+  <div class="card">
+    <h3>🎯 The SAT Formula Decision System</h3>
+    <div class="tip"><strong>💡 MARIAH'S RULE:</strong> Before every math problem, spend 5 seconds asking: <em>"What am I looking for?"</em> The answer determines which formula you use. The 3 most common answers are: <strong>(1) a slope or rate of change</strong> → slope formula; <strong>(2) an equation of a line</strong> → point-slope or y = mx+b; <strong>(3) the solutions to a quadratic</strong> → factoring, formula, or Desmos. If the problem mentions "vertex," "maximum," or "minimum" → vertex form or axis of symmetry formula.</div>
+
+    <h4 style="color:var(--bl);margin:18px 0 10px;font-size:1rem;">📋 LINEAR FUNCTIONS — Click Each Card to Expand</h4>
+    <div class="fcard-grid">
+      <div class="fcard" onclick="this.classList.toggle('expanded')">
+        <div class="fcard-title">1. Slope Formula</div>
+        <div class="fcard-formula">m = (y₂ − y₁) / (x₂ − x₁)</div>
+        <div class="fcard-body">
+          <p><strong>WHAT IT FINDS:</strong> The slope (steepness / rate of change) between any two points.</p>
+          <p class="fcard-when">🎯 USE WHEN: You're given two points (x₁,y₁) and (x₂,y₂) and need the slope OR when asked for a "rate of change."</p>
+          <p><strong>⚠️ TRAP:</strong> Always label which point is #1 and #2 BEFORE subtracting. Mixing up order is the #1 arithmetic error on the SAT.</p>
+          <div class="fcard-example">Points (−2, 3) and (4, 15):<br>m = (15 − 3) / (4 − (−2)) = 12 / 6 = 2</div>
+        </div>
+      </div>
+      <div class="fcard" onclick="this.classList.toggle('expanded')">
+        <div class="fcard-title">2. Slope-Intercept Form</div>
+        <div class="fcard-formula">y = mx + b</div>
+        <div class="fcard-body">
+          <p><strong>WHAT IT FINDS:</strong> The complete equation of a line. m = slope, b = y-intercept (where the line hits the y-axis).</p>
+          <p class="fcard-when">🎯 USE WHEN: Asked to identify or write the equation of a line. Also use to instantly read slope and y-intercept from a given equation.</p>
+          <p><strong>⚠️ TRAP:</strong> If the equation is in standard form (Ax + By = C), rewrite it to slope-intercept FIRST. Never read slope from standard form directly.</p>
+          <div class="fcard-example">4x + 3y = 12 → y = −(4/3)x + 4<br>Slope = −4/3, y-intercept = 4</div>
+        </div>
+      </div>
+      <div class="fcard" onclick="this.classList.toggle('expanded')">
+        <div class="fcard-title">3. Point-Slope Form</div>
+        <div class="fcard-formula">y − y₁ = m(x − x₁)</div>
+        <div class="fcard-body">
+          <p><strong>WHAT IT FINDS:</strong> The equation of a line when given a slope and ONE point (not necessarily the y-intercept).</p>
+          <p class="fcard-when">🎯 USE WHEN: You know the slope AND a point that is NOT (0, something). Point-slope is the fastest starting point — then simplify to slope-intercept at the end.</p>
+          <p><strong>💡 PRO MOVE:</strong> If the given point IS (0, b), you already have the y-intercept — skip point-slope and go straight to y = mx + b.</p>
+          <div class="fcard-example">m = 3/4, point (4, 1):<br>y − 1 = (3/4)(x − 4)<br>y = (3/4)x − 3 + 1 = (3/4)x − 2</div>
+        </div>
+      </div>
+      <div class="fcard" onclick="this.classList.toggle('expanded')">
+        <div class="fcard-title">4. Parallel &amp; Perpendicular Lines</div>
+        <div class="fcard-formula">Parallel: m₁ = m₂ | Perp: m₁ × m₂ = −1</div>
+        <div class="fcard-body">
+          <p><strong>WHAT IT FINDS:</strong> The slope of a new line based on a given line's slope.</p>
+          <p class="fcard-when">🎯 USE WHEN: The problem says "parallel to" → keep the exact same slope. "Perpendicular to" → flip and negate (negative reciprocal).</p>
+          <p><strong>💡 NEGATIVE RECIPROCAL SHORTCUT:</strong> Flip the fraction, change the sign.<br>Slope = 4/3 → perpendicular slope = −3/4<br>Slope = −2 → perpendicular slope = 1/2</p>
+          <div class="fcard-example">Line p has slope −4/3 → line perp. to p has slope 3/4</div>
+        </div>
+      </div>
+      <div class="fcard" onclick="this.classList.toggle('expanded')">
+        <div class="fcard-title">5. Systems of Equations — Special Solutions</div>
+        <div class="fcard-formula">No soln: same slope, diff. intercept<br>∞ solns: identical equations</div>
+        <div class="fcard-body">
+          <p><strong>WHAT IT FINDS:</strong> Whether a system has 0, 1, or infinitely many solutions.</p>
+          <p class="fcard-when">🎯 USE WHEN: Asked "how many solutions does this system have?" or "for what value of k does this system have infinite solutions?"</p>
+          <p><strong>💡 INFINITE SOLUTIONS HACK:</strong> One equation must be a scalar multiple of the other. Divide or multiply one equation to match the other, then solve for k.</p>
+          <div class="fcard-example">3x − ky = 9 and 6x − 4y = 18<br>Divide eq.2 by 2: 3x − 2y = 9<br>Match: k = 2 → ∞ solutions</div>
+        </div>
+      </div>
+    </div>
+
+    <h4 style="color:var(--bl);margin:24px 0 10px;font-size:1rem;">🔢 QUADRATIC FUNCTIONS — Click Each Card to Expand</h4>
+    <div class="fcard-grid">
+      <div class="fcard" onclick="this.classList.toggle('expanded')">
+        <div class="fcard-title">6. Standard Form + Axis of Symmetry</div>
+        <div class="fcard-formula">f(x) = ax² + bx + c<br>Axis: x = −b / (2a)</div>
+        <div class="fcard-body">
+          <p><strong>WHAT IT FINDS:</strong> y-intercept (it's c), direction (up if a > 0, down if a &lt; 0), and the x-value of the vertex.</p>
+          <p class="fcard-when">🎯 USE WHEN: You need the vertex x-coordinate or the y-intercept. Also use to find the maximum/minimum of a real-world quadratic (e.g., projectile height).</p>
+          <p><strong>💡 SHORTCUT:</strong> x = −b/(2a) gives you the x at the vertex. Plug that x back in to get the y (max or min value).</p>
+          <div class="fcard-example">h(t) = −16t² + 64t + 5<br>t = −64/(2×(−16)) = 2<br>h(2) = −64 + 128 + 5 = 69 feet max</div>
+        </div>
+      </div>
+      <div class="fcard" onclick="this.classList.toggle('expanded')">
+        <div class="fcard-title">7. Vertex Form</div>
+        <div class="fcard-formula">f(x) = a(x − h)² + k<br>Vertex = (h, k)</div>
+        <div class="fcard-body">
+          <p><strong>WHAT IT FINDS:</strong> The vertex (h, k) directly. No calculation needed — just read it off!</p>
+          <p class="fcard-when">🎯 USE WHEN: The equation is already in vertex form AND the SAT asks for the minimum value, maximum value, or vertex coordinates.</p>
+          <p><strong>⚠️ TRAP:</strong> The sign on h is tricky. In (x − h)², if you see (x − 3)², then h = +3. If you see (x + 3)², that's (x − (−3))², so h = −3.</p>
+          <div class="fcard-example">f(x) = 2(x − 3)² + 5<br>Vertex = (3, 5). Min value = 5 (since a=2 > 0)</div>
+        </div>
+      </div>
+      <div class="fcard" onclick="this.classList.toggle('expanded')">
+        <div class="fcard-title">8. Quadratic Formula</div>
+        <div class="fcard-formula">x = [−b ± √(b² − 4ac)] / 2a</div>
+        <div class="fcard-body">
+          <p><strong>WHAT IT FINDS:</strong> ALL solutions to any quadratic ax² + bx + c = 0. Always works, even when factoring fails.</p>
+          <p class="fcard-when">🎯 USE WHEN: The quadratic does NOT factor cleanly, or when the answer choices contain radicals or fractions that suggest messy roots.</p>
+          <p><strong>💡 BEFORE using the formula:</strong> Always rearrange to ax² + bx + c = 0 first. Then carefully identify a, b, and c.</p>
+          <div class="fcard-example">2x² − 7x − 15 = 0: a=2, b=−7, c=−15<br>x = [7 ± √(49+120)] / 4 = [7 ± 13] / 4<br>x = 5 or x = −3/2</div>
+        </div>
+      </div>
+      <div class="fcard" onclick="this.classList.toggle('expanded')">
+        <div class="fcard-title">9. Discriminant</div>
+        <div class="fcard-formula">Δ = b² − 4ac<br>Δ > 0: two roots | Δ = 0: one root | Δ &lt; 0: no real roots</div>
+        <div class="fcard-body">
+          <p><strong>WHAT IT FINDS:</strong> How many real solutions a quadratic has — WITHOUT solving it.</p>
+          <p class="fcard-when">🎯 USE WHEN: Asked "how many solutions does f(x) have?" or "for what value of k does the equation have exactly one real solution?" → Set Δ = 0.</p>
+          <p><strong>💡 ONE-SOLUTION TRICK:</strong> Δ = 0 → b² − 4ac = 0 → solve for the unknown variable (usually k).</p>
+          <div class="fcard-example">x² + kx + 16 = 0 has 1 solution:<br>k² − 4(1)(16) = 0 → k² = 64 → k = ±8</div>
+        </div>
+      </div>
+      <div class="fcard" onclick="this.classList.toggle('expanded')">
+        <div class="fcard-title">10. Factored Form</div>
+        <div class="fcard-formula">f(x) = a(x − r₁)(x − r₂)<br>Roots: x = r₁ and x = r₂</div>
+        <div class="fcard-body">
+          <p><strong>WHAT IT FINDS:</strong> The x-intercepts (zeros/roots) of a quadratic directly — just read them off from the factored form.</p>
+          <p class="fcard-when">🎯 USE WHEN: The equation factors cleanly (integers multiply to c, add to b) OR when you're given the roots and need to work backwards to the equation.</p>
+          <p><strong>💡 BACKWARDS HACK:</strong> Given roots 3 and −5 → equation is a(x − 3)(x + 5). Expand and match any given information to find a.</p>
+          <div class="fcard-example">x² + 7x + 12 = (x+3)(x+4)<br>Roots: x = −3 and x = −4</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🗺️ Master Decision Chart — Which Formula Do I Use?</h3>
+    <div class="fdecision">
+      <div class="fdecision-hdr">📋 SAT MATH QUESTION → FORMULA MATCH</div>
+      <table>
+        <tr><th>If the SAT asks you…</th><th>Formula to Use</th><th>Key Signal Words</th></tr>
+        <tr><td>Find the slope between two points</td><td><strong>Slope Formula:</strong> m = (y₂−y₁)/(x₂−x₁)</td><td>"slope," "rate of change," "steepness"</td></tr>
+        <tr><td>Find the equation of a line given a point &amp; slope</td><td><strong>Point-Slope:</strong> y − y₁ = m(x − x₁)</td><td>"equation of a line," "passes through"</td></tr>
+        <tr><td>Find the equation of a line given y-intercept &amp; slope</td><td><strong>Slope-Intercept:</strong> y = mx + b</td><td>"y-intercept," "crosses the y-axis"</td></tr>
+        <tr><td>Find the equation of a <em>parallel</em> line</td><td><strong>Same slope</strong> → Point-Slope form</td><td>"parallel to," "same slope"</td></tr>
+        <tr><td>Find the equation of a <em>perpendicular</em> line</td><td><strong>Negative reciprocal slope</strong> → Point-Slope</td><td>"perpendicular to," "forms a right angle"</td></tr>
+        <tr><td>System has infinite solutions (find k)</td><td><strong>Make equations identical:</strong> divide/multiply one to match the other</td><td>"infinitely many solutions," "same line"</td></tr>
+        <tr><td>Find the <em>minimum</em> or <em>maximum</em> value of a quadratic</td><td><strong>Vertex Form</strong> (read off k) OR <strong>x = −b/(2a)</strong> then substitute</td><td>"minimum value," "maximum height," "vertex"</td></tr>
+        <tr><td>Solve a quadratic (find roots/zeros/solutions)</td><td><strong>Factor</strong> if easy; otherwise <strong>Quadratic Formula</strong></td><td>"solutions," "zeros," "x-intercepts," "where does f(x) = 0"</td></tr>
+        <tr><td>How many real solutions does a quadratic have?</td><td><strong>Discriminant:</strong> b² − 4ac</td><td>"how many solutions," "exactly one solution," "no real roots"</td></tr>
+        <tr><td>Find k so that a quadratic has exactly one solution</td><td><strong>Set discriminant = 0:</strong> b² − 4ac = 0, solve for k</td><td>"exactly one," "tangent," "repeated root"</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>✏️ Formula Identification Practice — 4 Warm-Up Questions</h3>
+    <p style="margin-bottom:18px;color:var(--mut);">Read each question. Identify the correct formula before choosing your answer.</p>
+
+    <div id="fq1" class="qblock">
+      <div class="qnum">Formula ID Question 1 of 4</div>
+      <div class="qtxt">A tutor charges a flat fee of $25 plus $15 per hour. Which formula form BEST models the total cost C as a function of hours h?</div>
+      <div class="opts">
+        <button class="opt" data-qid="fq1" data-ok="false" data-eid="f1"><span class="lt">A</span>Quadratic Formula — C = ah² + bh + c</button>
+        <button class="opt" data-qid="fq1" data-ok="true" data-eid="f1"><span class="lt">B</span>Slope-Intercept Form — C = 15h + 25</button>
+        <button class="opt" data-qid="fq1" data-ok="false" data-eid="f1"><span class="lt">C</span>Vertex Form — C = a(h − 15)² + 25</button>
+        <button class="opt" data-qid="fq1" data-ok="false" data-eid="f1"><span class="lt">D</span>Point-Slope Form — C − 25 = 15(h − 0)</button>
+      </div>
+      <div class="exp" id="f1-exp">
+        <div class="et">✅ Answer: B — Slope-Intercept Form</div>
+        <div class="exp-steps">
+          <strong>WHY B:</strong> The relationship is linear (constant rate of $15/hour + fixed $25). This matches y = mx + b:<br>
+          • m = 15 (rate of change per hour)<br>
+          • b = 25 (flat starting fee = y-intercept)<br>
+          • So C = 15h + 25 ✓
+        </div>
+        <div class="exp-wrong">❌ <strong>Why not D?</strong> Point-Slope gives the SAME equation but is not the "best model" — we have the y-intercept, so slope-intercept is cleaner and more direct. D is also technically correct as a starting point but B is the final, simplified form the SAT expects.</div>
+        <strong>🗺️ Formula Signal:</strong> "flat fee" = y-intercept | "per hour" = slope → slope-intercept.
+      </div>
+    </div>
+
+    <div id="fq2" class="qblock">
+      <div class="qnum">Formula ID Question 2 of 4</div>
+      <div class="qtxt">The SAT asks: "The function g(x) = −3(x + 2)² − 7. What is the maximum value of g(x)?" Which formula gives the answer most directly?</div>
+      <div class="opts">
+        <button class="opt" data-qid="fq2" data-ok="false" data-eid="f2"><span class="lt">A</span>Quadratic Formula: x = [−b ± √(b² − 4ac)] / 2a</button>
+        <button class="opt" data-qid="fq2" data-ok="false" data-eid="f2"><span class="lt">B</span>Axis of Symmetry: x = −b / (2a)</button>
+        <button class="opt" data-qid="fq2" data-ok="true" data-eid="f2"><span class="lt">C</span>Vertex Form: f(x) = a(x − h)² + k → maximum = k</button>
+        <button class="opt" data-qid="fq2" data-ok="false" data-eid="f2"><span class="lt">D</span>Slope Formula: m = (y₂ − y₁) / (x₂ − x₁)</button>
+      </div>
+      <div class="exp" id="f2-exp">
+        <div class="et">✅ Answer: C — Vertex Form</div>
+        <div class="exp-steps">
+          g(x) = −3(x + 2)² − 7 is already in vertex form: a(x − h)² + k<br>
+          • Rewrite: g(x) = −3(x − (−2))² + (−7)<br>
+          • So h = −2, k = −7, a = −3<br>
+          • Since a = −3 &lt; 0, parabola opens DOWN → vertex is the MAXIMUM<br>
+          • <strong>Maximum value = k = −7</strong>, occurring at x = −2 ✓<br>
+          <strong>You NEVER needed to expand or use the quadratic formula.</strong>
+        </div>
+        <div class="exp-wrong">❌ <strong>Why not B?</strong> Axis of symmetry finds the x-value at the vertex — but you'd still need to substitute back in. Vertex form is one step faster.</div>
+      </div>
+    </div>
+
+    <div id="fq3" class="qblock">
+      <div class="qnum">Formula ID Question 3 of 4</div>
+      <div class="qtxt">The SAT asks: "For what value of k does 3x² − 6x + k = 0 have no real solutions?" Which tool gives the answer?</div>
+      <div class="opts">
+        <button class="opt" data-qid="fq3" data-ok="false" data-eid="f3"><span class="lt">A</span>Vertex Form — set k equal to the vertex y-value</button>
+        <button class="opt" data-qid="fq3" data-ok="true" data-eid="f3"><span class="lt">B</span>Discriminant — set b² − 4ac &lt; 0 and solve for k</button>
+        <button class="opt" data-qid="fq3" data-ok="false" data-eid="f3"><span class="lt">C</span>Factoring — find factors of 3k that sum to −6</button>
+        <button class="opt" data-qid="fq3" data-ok="false" data-eid="f3"><span class="lt">D</span>Slope Formula — the slope between the two roots is zero</button>
+      </div>
+      <div class="exp" id="f3-exp">
+        <div class="et">✅ Answer: B — Discriminant</div>
+        <div class="exp-steps">
+          "No real solutions" means discriminant &lt; 0:<br>
+          b² − 4ac &lt; 0 where a = 3, b = −6, c = k<br>
+          (−6)² − 4(3)(k) &lt; 0<br>
+          36 − 12k &lt; 0<br>
+          36 &lt; 12k → <strong>k &gt; 3</strong> ✓
+        </div>
+        <strong>📌 Key Signal:</strong> "no real solutions" / "no real roots" → ALWAYS use the discriminant. No other formula answers this question.
+      </div>
+    </div>
+
+    <div id="fq4" class="qblock">
+      <div class="qnum">Formula ID Question 4 of 4</div>
+      <div class="qtxt">Line ℓ₁ has equation 3x − 5y = 10. Line ℓ₂ is perpendicular to ℓ₁ and passes through (3, −1). To find the y-intercept of ℓ₂, which sequence of formulas is correct?</div>
+      <div class="opts">
+        <button class="opt" data-qid="fq4" data-ok="false" data-eid="f4"><span class="lt">A</span>Quadratic Formula → Vertex Form → y-intercept</button>
+        <button class="opt" data-qid="fq4" data-ok="true" data-eid="f4"><span class="lt">B</span>Rewrite to y = mx+b (find slope) → Negative Reciprocal (perp. slope) → Point-Slope → Solve for b</button>
+        <button class="opt" data-qid="fq4" data-ok="false" data-eid="f4"><span class="lt">C</span>Slope formula with two points → Standard Form</button>
+        <button class="opt" data-qid="fq4" data-ok="false" data-eid="f4"><span class="lt">D</span>Discriminant → Factoring → y-intercept</button>
+      </div>
+      <div class="exp" id="f4-exp">
+        <div class="et">✅ Answer: B — The Multi-Step Linear Chain</div>
+        <div class="exp-steps">
+          <strong>Step 1:</strong> 3x − 5y = 10 → y = (3/5)x − 2. Slope of ℓ₁ = 3/5<br>
+          <strong>Step 2:</strong> Perpendicular slope = −5/3 (negative reciprocal)<br>
+          <strong>Step 3:</strong> Point-slope through (3, −1): y − (−1) = −(5/3)(x − 3)<br>
+          y + 1 = −(5/3)x + 5 → y = −(5/3)x + 4<br>
+          <strong>y-intercept = 4</strong> ✓
+        </div>
+        <strong>💡 Chain Formula Problems</strong> are very common on SAT. The signal is "perpendicular to" + "passes through" + "y-intercept." Always go: slope → perpendicular slope → point-slope → simplify.
+      </div>
+    </div>
+  </div>
+
+  <div class="bnav">
+    <span class="bnav-info">Section 1 of 7 — Formula Guide</span>
+    <button class="bnav-btn bnav-next" onclick="goSec('linear')">Next: Linear Mastery →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SECTION 2: LINEAR MASTERY
+══════════════════════════════════════════════════════ -->
+<div id="pane-linear" class="pane">
+  <div class="hero">
+    <div class="badge">Math Deep Dive — Linear Functions on the SAT</div>
+    <h2>📈 Linear Mastery: Every Hack, Every Trap, Every Question Type</h2>
+    <p>~6–8 SAT questions involve linear functions. This section covers every type you'll see with the most efficient strategies to solve each one.</p>
+  </div>
+
+  <div class="card">
+    <h3>⚡ The 5 Linear Question Types You Will Always See</h3>
+    <table>
+      <tr><th>#</th><th>Question Type</th><th>Best Approach</th><th>Time on SAT</th></tr>
+      <tr><td><strong>1</strong></td><td>Given two points, find slope or equation</td><td>Slope formula → point-slope → simplify</td><td>45 sec</td></tr>
+      <tr><td><strong>2</strong></td><td>Parallel or perpendicular lines</td><td>Get slope of original → modify → point-slope</td><td>60 sec</td></tr>
+      <tr><td><strong>3</strong></td><td>System: find intersection point</td><td>Substitution or elimination (or Desmos)</td><td>60–90 sec</td></tr>
+      <tr><td><strong>4</strong></td><td>System: how many solutions? Find k</td><td>Rewrite both in slope-intercept → compare slopes &amp; intercepts</td><td>75 sec</td></tr>
+      <tr><td><strong>5</strong></td><td>Word problem with linear model</td><td>Identify slope (rate) and y-intercept (starting value), write equation</td><td>90 sec</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>🔑 Linear Hacks — Shortcuts That Save 30–60 Seconds Each</h3>
+    <div class="hck"><strong>🔴 HACK 1 — Free y-intercept:</strong> If any given point has x = 0, that point IS the y-intercept. Write b = y-value immediately. Skip all algebra.</div>
+    <div class="tip"><strong>💡 HACK 2 — Perpendicular slope in 3 seconds:</strong> Slope is 4/3? Flip → 3/4, change sign → −3/4. Done. Slope is −5? Write it as −5/1, flip → 1/5, change sign → +1/5.</div>
+    <div class="trk"><strong>🔵 HACK 3 — Infinite Solutions (find k):</strong> Divide the bigger equation to make it look like the smaller one. What's k? Whatever makes both equations identical.</div>
+    <div class="grn"><strong>🟢 HACK 4 — Word Problem Decoder:</strong><br>
+    "Each" / "per" / "every" → slope (m)<br>
+    "Initial" / "starting" / "flat fee" / "deposit" → y-intercept (b)<br>
+    "Total" / "after x units" → y-value to find<br>
+    Once you label m and b, it's just y = mx + b.</div>
+    <div class="pur"><strong>🟣 HACK 5 — Standard Form Speed Read:</strong> For Ax + By = C:<br>
+    • Slope = −A/B (don't expand, just negate and divide)<br>
+    • y-intercept = C/B<br>
+    • x-intercept = C/A</div>
+  </div>
+
+  <div class="card">
+    <h3>✏️ Linear Deep Practice — 6 SAT-Style Questions</h3>
+
+    <div id="lq1" class="qblock">
+      <div class="qnum">Linear Question 1 of 6 — Slope &amp; Parallel Lines</div>
+      <div class="qtxt">Line ℓ passes through (−2, 3) and (4, 15). Which is the equation of a line parallel to ℓ that passes through (0, −5)?</div>
+      <div class="opts">
+        <button class="opt" data-qid="lq1" data-ok="false" data-eid="l1"><span class="lt">A</span>y = 3x − 5</button>
+        <button class="opt" data-qid="lq1" data-ok="true" data-eid="l1"><span class="lt">B</span>y = 2x − 5</button>
+        <button class="opt" data-qid="lq1" data-ok="false" data-eid="l1"><span class="lt">C</span>y = −½x − 5</button>
+        <button class="opt" data-qid="lq1" data-ok="false" data-eid="l1"><span class="lt">D</span>y = 2x + 5</button>
+      </div>
+      <div class="exp" id="l1-exp">
+        <div class="et">✅ Answer: B — y = 2x − 5</div>
+        <div class="exp-steps">
+          <strong>Step 1 — Find slope of ℓ:</strong> m = (15 − 3) / (4 − (−2)) = 12 / 6 = <strong>2</strong><br>
+          <strong>Step 2 — Parallel means same slope:</strong> m = 2<br>
+          <strong>Step 3 — Point (0, −5) has x = 0, so b = −5 directly!</strong><br>
+          <strong>Answer:</strong> y = 2x − 5 ✓
+        </div>
+        <div class="exp-wrong">❌ <strong>Why not A (y = 3x − 5)?</strong> The slope calculation 12/6 = 2, NOT 3. This is a common arithmetic error — double-check by counting: from x=−2 to x=4 is 6 units across, not 4.</div>
+        <div class="exp-wrong">❌ <strong>Why not D (y = 2x + 5)?</strong> The slope is correct but the y-intercept is wrong. The point (0, −5) tells you b = −5, not +5.</div>
+      </div>
+    </div>
+
+    <div id="lq2" class="qblock">
+      <div class="qnum">Linear Question 2 of 6 — Infinite Solutions</div>
+      <div class="qtxt">For what value of k does the system 3x − ky = 9 and 6x − 4y = 18 have infinitely many solutions?</div>
+      <div class="opts">
+        <button class="opt" data-qid="lq2" data-ok="false" data-eid="l2"><span class="lt">A</span>k = 6</button>
+        <button class="opt" data-qid="lq2" data-ok="true" data-eid="l2"><span class="lt">B</span>k = 2</button>
+        <button class="opt" data-qid="lq2" data-ok="false" data-eid="l2"><span class="lt">C</span>k = 3</button>
+        <button class="opt" data-qid="lq2" data-ok="false" data-eid="l2"><span class="lt">D</span>k = 4</button>
+      </div>
+      <div class="exp" id="l2-exp">
+        <div class="et">✅ Answer: B — k = 2</div>
+        <div class="exp-steps">
+          <strong>∞ Solutions = identical equations (same line)</strong><br>
+          <strong>Step 1 — Simplify equation 2:</strong> Divide 6x − 4y = 18 by 2 → 3x − 2y = 9<br>
+          <strong>Step 2 — Compare to equation 1:</strong> 3x − ky = 9<br>
+          <strong>Step 3 — Match coefficients:</strong> For identical equations, k must equal 2<br>
+          <strong>k = 2</strong> ✓<br>
+          <em>Verification: both equations become 3x − 2y = 9 (same line)</em>
+        </div>
+        <div class="exp-wrong">❌ <strong>Why not k = 4?</strong> k = 4 would give 3x − 4y = 9 and 3x − 2y = 9 — different y-coefficients → parallel lines with NO solution, not infinite solutions.</div>
+      </div>
+    </div>
+
+    <div id="lq3" class="qblock">
+      <div class="qnum">Linear Question 3 of 6 — Perpendicular Lines + y-intercept</div>
+      <div class="qtxt">Line p has equation 4x + 3y = 12. Line q is perpendicular to p and passes through (4, 1). What is the y-intercept of line q?</div>
+      <div class="opts">
+        <button class="opt" data-qid="lq3" data-ok="false" data-eid="l3"><span class="lt">A</span>4</button>
+        <button class="opt" data-qid="lq3" data-ok="true" data-eid="l3"><span class="lt">B</span>−2</button>
+        <button class="opt" data-qid="lq3" data-ok="false" data-eid="l3"><span class="lt">C</span>7</button>
+        <button class="opt" data-qid="lq3" data-ok="false" data-eid="l3"><span class="lt">D</span>1</button>
+      </div>
+      <div class="exp" id="l3-exp">
+        <div class="et">✅ Answer: B — y-intercept = −2</div>
+        <div class="exp-steps">
+          <strong>Step 1 — Find slope of p:</strong> 4x + 3y = 12 → 3y = −4x + 12 → y = −(4/3)x + 4. Slope of p = −4/3<br>
+          <strong>Step 2 — Perpendicular slope:</strong> Flip and negate −4/3 → 3/4<br>
+          <strong>Step 3 — Point-slope for q through (4, 1):</strong><br>
+          y − 1 = (3/4)(x − 4)<br>
+          y − 1 = (3/4)x − 3<br>
+          y = (3/4)x − 2<br>
+          <strong>y-intercept = −2</strong> ✓
+        </div>
+        <div class="exp-wrong">❌ <strong>Why not 4?</strong> 4 is the y-intercept of LINE P (from 4x + 3y = 12 → y = −4/3 x + 4). The question asks for line q, not p.</div>
+        <div class="exp-wrong">❌ <strong>Why not 1?</strong> 1 is the y-coordinate of the given point (4, 1). The y-intercept is where x = 0, not the y from the given point.</div>
+      </div>
+    </div>
+
+    <div id="lq4" class="qblock">
+      <div class="qnum">Linear Question 4 of 6 — Word Problem (Rate + Starting Value)</div>
+      <div class="qtxt">A swimming pool contains 12,000 gallons. Water is draining at a constant rate of 400 gallons per hour. Which equation gives the number of gallons G remaining after t hours, and how many hours until the pool is empty?</div>
+      <div class="opts">
+        <button class="opt" data-qid="lq4" data-ok="false" data-eid="l4"><span class="lt">A</span>G = 400t + 12,000; empties at t = −30 hours</button>
+        <button class="opt" data-qid="lq4" data-ok="true" data-eid="l4"><span class="lt">B</span>G = −400t + 12,000; empties at t = 30 hours</button>
+        <button class="opt" data-qid="lq4" data-ok="false" data-eid="l4"><span class="lt">C</span>G = 400t − 12,000; empties at t = 30 hours</button>
+        <button class="opt" data-qid="lq4" data-ok="false" data-eid="l4"><span class="lt">D</span>G = −12,000t + 400; empties at t = 1/30 hours</button>
+      </div>
+      <div class="exp" id="l4-exp">
+        <div class="et">✅ Answer: B — G = −400t + 12,000; empties at t = 30 hours</div>
+        <div class="exp-steps">
+          <strong>Decode the word problem:</strong><br>
+          • "draining" = slope is negative → m = −400<br>
+          • "contains 12,000" = starting value = y-intercept → b = 12,000<br>
+          <strong>Equation:</strong> G = −400t + 12,000<br>
+          <strong>Pool empty when G = 0:</strong> 0 = −400t + 12,000 → 400t = 12,000 → t = 30 hours ✓
+        </div>
+        <div class="exp-wrong">❌ <strong>Why not A?</strong> "Draining" means DECREASING — the slope must be negative. +400 means the pool is filling, not draining.</div>
+      </div>
+    </div>
+
+    <div id="lq5" class="qblock">
+      <div class="qnum">Linear Question 5 of 6 — System of Equations</div>
+      <div class="qtxt">A movie theater sells large popcorn for $8 and small popcorn for $5. In one hour, 35 items were sold for a total of $244. How many large popcorns were sold?</div>
+      <div class="opts">
+        <button class="opt" data-qid="lq5" data-ok="false" data-eid="l5"><span class="lt">A</span>17</button>
+        <button class="opt" data-qid="lq5" data-ok="false" data-eid="l5"><span class="lt">B</span>18</button>
+        <button class="opt" data-qid="lq5" data-ok="true" data-eid="l5"><span class="lt">C</span>23</button>
+        <button class="opt" data-qid="lq5" data-ok="false" data-eid="l5"><span class="lt">D</span>25</button>
+      </div>
+      <div class="exp" id="l5-exp">
+        <div class="et">✅ Answer: C — 23 large popcorns</div>
+        <div class="exp-steps">
+          Let L = large, S = small<br>
+          <strong>Equation 1 (count):</strong> L + S = 35<br>
+          <strong>Equation 2 (revenue):</strong> 8L + 5S = 244<br>
+          <strong>Substitution:</strong> S = 35 − L<br>
+          8L + 5(35 − L) = 244<br>
+          8L + 175 − 5L = 244<br>
+          3L = 69 → L = 23 ✓<br>
+          <em>Check: 23 large + 12 small = 35. Revenue: 8(23) + 5(12) = 184 + 60 = 244 ✓</em>
+        </div>
+        <div class="exp-wrong">❌ <strong>Common trap:</strong> Always check by plugging back in. Getting L = 23 means S = 12. Verify BOTH equations before selecting your answer.</div>
+      </div>
+    </div>
+
+    <div id="lq6" class="qblock">
+      <div class="qnum">Linear Question 6 of 6 — Advanced: No Solution</div>
+      <div class="qtxt">The system kx + 3y = 6 and 2x + y = 4 has no solution. What is the value of k?</div>
+      <div class="opts">
+        <button class="opt" data-qid="lq6" data-ok="false" data-eid="l6"><span class="lt">A</span>k = −6</button>
+        <button class="opt" data-qid="lq6" data-ok="false" data-eid="l6"><span class="lt">B</span>k = 3</button>
+        <button class="opt" data-qid="lq6" data-ok="true" data-eid="l6"><span class="lt">C</span>k = 6</button>
+        <button class="opt" data-qid="lq6" data-ok="false" data-eid="l6"><span class="lt">D</span>k = 2</button>
+      </div>
+      <div class="exp" id="l6-exp">
+        <div class="et">✅ Answer: C — k = 6</div>
+        <div class="exp-steps">
+          <strong>No solution = parallel lines = same slope, different y-intercept</strong><br>
+          <strong>Step 1 — Find slope of equation 2:</strong> 2x + y = 4 → y = −2x + 4. Slope = −2<br>
+          <strong>Step 2 — Rewrite equation 1 in slope-intercept:</strong> kx + 3y = 6 → y = −(k/3)x + 2. Slope = −k/3<br>
+          <strong>Step 3 — Set slopes equal (parallel):</strong> −k/3 = −2 → k = 6<br>
+          <strong>Step 4 — Verify different intercepts:</strong> Line 1 has intercept 2, Line 2 has intercept 4. ✓ Different → no solution ✓
+        </div>
+        <div class="exp-wrong">❌ <strong>Why not k = 3?</strong> k = 3 gives slope −3/3 = −1, but line 2 has slope −2. Different slopes → one solution (intersection), not no solution.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bnav">
+    <button class="bnav-btn bnav-prev" onclick="goSec('formulas')">← Formula Guide</button>
+    <span class="bnav-info">Section 2 of 7 — Linear Mastery</span>
+    <button class="bnav-btn bnav-next" onclick="goSec('quadratic')">Next: Quadratic Mastery →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SECTION 3: QUADRATIC MASTERY
+══════════════════════════════════════════════════════ -->
+<div id="pane-quadratic" class="pane">
+  <div class="hero">
+    <div class="badge">Math Deep Dive — Quadratic Functions on the SAT</div>
+    <h2>🔢 Quadratic Mastery: All Forms, All Tricks, Zero Confusion</h2>
+    <p>~4–5 SAT questions involve quadratics. This section attacks every question type with step-by-step solutions and hacks to solve them faster.</p>
+  </div>
+
+  <div class="card">
+    <h3>🛠️ The 5 Quadratic Question Types — Identified &amp; Solved</h3>
+    <table>
+      <tr><th>Question Type</th><th>What to Look For</th><th>Best Method</th></tr>
+      <tr><td><strong>Find the zeros/roots/solutions</strong></td><td>"What are the solutions?", "x-intercepts", "where f(x) = 0"</td><td>Factor first; if messy → Quadratic Formula</td></tr>
+      <tr><td><strong>Find vertex (min/max)</strong></td><td>"minimum value", "maximum height", "vertex"</td><td>If in vertex form → read k. Otherwise → x = −b/(2a) then substitute</td></tr>
+      <tr><td><strong>Number of solutions</strong></td><td>"how many", "no real roots", "exactly one solution"</td><td>Discriminant: b² − 4ac</td></tr>
+      <tr><td><strong>Find k for special condition</strong></td><td>"for what value of k", "exactly one solution", "tangent"</td><td>Set discriminant = 0, solve for k</td></tr>
+      <tr><td><strong>Real-world application</strong></td><td>"height model", "projectile", "profit function"</td><td>Identify max/min using vertex; roots = when it hits the ground/breaks even</td></tr>
+    </table>
+    <div class="tip"><strong>💡 REMEMBER THE RULE:</strong> a > 0 = parabola opens UP = vertex is MINIMUM. a &lt; 0 = parabola opens DOWN = vertex is MAXIMUM. Check the sign of a FIRST before answering any min/max question.</div>
+  </div>
+
+  <div class="card">
+    <h3>🔑 Quadratic Hacks — The SAT Loves These</h3>
+    <div class="hck"><strong>🔴 HACK 1 — Vertex Form Instant Read:</strong> If f(x) = a(x − h)² + k, then vertex = (h, k), min/max = k. Never expand vertex form to answer a vertex question. Read. It. Directly.</div>
+    <div class="tip"><strong>💡 HACK 2 — (b/2)² Shortcut for Completing the Square:</strong> Take the b coefficient, divide by 2, square it → that's the number you add to both sides. For x² + 8x + ? = complete square: add (8/2)² = 16. Result: (x+4)² = ...</div>
+    <div class="trk"><strong>🔵 HACK 3 — Discriminant for k problems:</strong> The phrase "exactly one real solution" → ALWAYS set b² − 4ac = 0 and solve. The phrase "no real solutions" → set b² − 4ac &lt; 0 and find the range of k.</div>
+    <div class="grn"><strong>🟢 HACK 4 — Projectile Maximum Shortcut:</strong> For h(t) = −16t² + v₀t + h₀:<br>
+    • Time of max height: t = v₀/(32) [since −b/(2a) = v₀/(32)]<br>
+    • Max height: plug that t back in<br>
+    • The h₀ term is just the starting height — it shifts the whole parabola up</div>
+    <div class="pur"><strong>🟣 HACK 5 — Factoring Fast Check:</strong> Before factoring ax² + bx + c, check if b² − 4ac is a perfect square. If yes → factors cleanly. If not → use the quadratic formula and save time not trying to force a factoring that won't work.</div>
+  </div>
+
+  <div class="card">
+    <h3>✏️ Quadratic Deep Practice — 6 SAT-Style Questions</h3>
+
+    <div id="qq1" class="qblock">
+      <div class="qnum">Quadratic Question 1 of 6 — Factoring</div>
+      <div class="qtxt">What are the solutions to 2x² − 7x − 15 = 0?</div>
+      <div class="opts">
+        <button class="opt" data-qid="qq1" data-ok="false" data-eid="q1"><span class="lt">A</span>x = 3 and x = −5/2</button>
+        <button class="opt" data-qid="qq1" data-ok="true" data-eid="q1"><span class="lt">B</span>x = 5 and x = −3/2</button>
+        <button class="opt" data-qid="qq1" data-ok="false" data-eid="q1"><span class="lt">C</span>x = −5 and x = 3/2</button>
+        <button class="opt" data-qid="qq1" data-ok="false" data-eid="q1"><span class="lt">D</span>x = 7 and x = −15/2</button>
+      </div>
+      <div class="exp" id="q1-exp">
+        <div class="et">✅ Answer: B — x = 5 and x = −3/2</div>
+        <div class="exp-steps">
+          <strong>Factor by grouping:</strong> 2x² − 7x − 15 = 0<br>
+          • Find numbers that multiply to (2)(−15) = −30 AND add to −7 → 3 and −10<br>
+          • Rewrite: 2x² + 3x − 10x − 15 = 0<br>
+          • Group: x(2x + 3) − 5(2x + 3) = 0<br>
+          • Factor: (x − 5)(2x + 3) = 0<br>
+          • Solutions: x = 5 or x = −3/2 ✓<br>
+          <em>Quadratic Formula check: x = [7 ± √(49+120)] / 4 = [7 ± 13] / 4 → x = 5 or x = −3/2 ✓</em>
+        </div>
+        <div class="exp-wrong">❌ <strong>Why not A (x=3 and x=−5/2)?</strong> Test x=3: 2(9) − 21 − 15 = 18 − 36 = −18 ≠ 0. That's NOT a solution. Always verify by substituting.</div>
+      </div>
+    </div>
+
+    <div id="qq2" class="qblock">
+      <div class="qnum">Quadratic Question 2 of 6 — Vertex Form Minimum</div>
+      <div class="qtxt">The function f(x) = 2(x − 3)² + 5 has a minimum value. What is the minimum value and at what x does it occur?</div>
+      <div class="opts">
+        <button class="opt" data-qid="qq2" data-ok="false" data-eid="q2"><span class="lt">A</span>Minimum of 3, at x = 5</button>
+        <button class="opt" data-qid="qq2" data-ok="true" data-eid="q2"><span class="lt">B</span>Minimum of 5, at x = 3</button>
+        <button class="opt" data-qid="qq2" data-ok="false" data-eid="q2"><span class="lt">C</span>Minimum of 2, at x = 3</button>
+        <button class="opt" data-qid="qq2" data-ok="false" data-eid="q2"><span class="lt">D</span>Minimum of 5, at x = −3</button>
+      </div>
+      <div class="exp" id="q2-exp">
+        <div class="et">✅ Answer: B — Minimum of 5, at x = 3</div>
+        <div class="exp-steps">
+          Vertex form: f(x) = a(x − h)² + k → Vertex = (h, k)<br>
+          Here: f(x) = 2(x − 3)² + 5<br>
+          • a = 2 (positive → opens UP → vertex is MINIMUM)<br>
+          • h = 3 (the x in parentheses is x − 3, so h = +3)<br>
+          • k = 5 (the constant added outside)<br>
+          <strong>Minimum value = 5, occurs at x = 3</strong> ✓<br>
+          <em>The minimum value is the OUTPUT (y-value) at the vertex, which is k = 5.</em>
+        </div>
+        <div class="exp-wrong">❌ <strong>Why not D (x = −3)?</strong> The (x − 3)² term means h = +3, NOT −3. If it were (x + 3)², then h = −3. The sign inside the parentheses is OPPOSITE to h.</div>
+        <div class="exp-wrong">❌ <strong>Why not minimum of 2?</strong> a = 2 is the coefficient that controls width of the parabola, not the minimum value. The minimum value is always k, the constant added OUTSIDE the parentheses.</div>
+      </div>
+    </div>
+
+    <div id="qq3" class="qblock">
+      <div class="qnum">Quadratic Question 3 of 6 — Discriminant</div>
+      <div class="qtxt">For what value of k does x² + kx + 16 = 0 have exactly one real solution?</div>
+      <div class="opts">
+        <button class="opt" data-qid="qq3" data-ok="false" data-eid="q3"><span class="lt">A</span>k = 4 only</button>
+        <button class="opt" data-qid="qq3" data-ok="true" data-eid="q3"><span class="lt">B</span>k = 8 or k = −8</button>
+        <button class="opt" data-qid="qq3" data-ok="false" data-eid="q3"><span class="lt">C</span>k = 2 or k = −2</button>
+        <button class="opt" data-qid="qq3" data-ok="false" data-eid="q3"><span class="lt">D</span>k = 32 or k = −32</button>
+      </div>
+      <div class="exp" id="q3-exp">
+        <div class="et">✅ Answer: B — k = 8 or k = −8</div>
+        <div class="exp-steps">
+          <strong>Exactly one real solution → discriminant = 0</strong><br>
+          b² − 4ac = 0<br>
+          Here: a = 1, b = k, c = 16<br>
+          k² − 4(1)(16) = 0<br>
+          k² − 64 = 0<br>
+          k² = 64<br>
+          <strong>k = 8 or k = −8</strong> ✓<br>
+          <em>Check k = 8: x² + 8x + 16 = (x+4)² → one solution x = −4 ✓</em><br>
+          <em>Check k = −8: x² − 8x + 16 = (x−4)² → one solution x = 4 ✓</em>
+        </div>
+        <div class="exp-wrong">❌ <strong>Why not k = 4?</strong> k = 4: discriminant = 16 − 64 = −48 &lt; 0 → NO real solutions. k = 4 gives zero solutions, not one.</div>
+      </div>
+    </div>
+
+    <div id="qq4" class="qblock">
+      <div class="qnum">Quadratic Question 4 of 6 — Projectile Maximum</div>
+      <div class="qtxt">A ball is thrown upward. Its height h(t) = −16t² + 64t + 5 feet, where t is in seconds. What is the maximum height the ball reaches?</div>
+      <div class="opts">
+        <button class="opt" data-qid="qq4" data-ok="false" data-eid="q4"><span class="lt">A</span>64 feet</button>
+        <button class="opt" data-qid="qq4" data-ok="true" data-eid="q4"><span class="lt">B</span>69 feet</button>
+        <button class="opt" data-qid="qq4" data-ok="false" data-eid="q4"><span class="lt">C</span>5 feet</button>
+        <button class="opt" data-qid="qq4" data-ok="false" data-eid="q4"><span class="lt">D</span>80 feet</button>
+      </div>
+      <div class="exp" id="q4-exp">
+        <div class="et">✅ Answer: B — 69 feet</div>
+        <div class="exp-steps">
+          a = −16, b = 64, c = 5. Since a &lt; 0, parabola opens DOWN → vertex is MAXIMUM<br>
+          <strong>Step 1 — Find t at maximum:</strong> t = −b/(2a) = −64/(2×(−16)) = −64/−32 = 2 seconds<br>
+          <strong>Step 2 — Find the maximum height:</strong><br>
+          h(2) = −16(2²) + 64(2) + 5<br>
+          h(2) = −16(4) + 128 + 5<br>
+          h(2) = −64 + 128 + 5 = <strong>69 feet</strong> ✓
+        </div>
+        <div class="exp-wrong">❌ <strong>Why not 64?</strong> 64 is the initial velocity (coefficient of t), not the height. The maximum height requires substituting t = 2 into the full equation.</div>
+        <div class="exp-wrong">❌ <strong>Why not 5?</strong> 5 is the starting height (h₀ when t = 0). The ball goes UP from 5 feet, reaching 69 feet at t = 2.</div>
+      </div>
+    </div>
+
+    <div id="qq5" class="qblock">
+      <div class="qnum">Quadratic Question 5 of 6 — Completing the Square</div>
+      <div class="qtxt">Which of the following is equivalent to x² − 6x + 5 = 0 written in vertex form, and what are the solutions?</div>
+      <div class="opts">
+        <button class="opt" data-qid="qq5" data-ok="false" data-eid="q5"><span class="lt">A</span>(x − 3)² = 4; solutions x = 7 or x = −1</button>
+        <button class="opt" data-qid="qq5" data-ok="true" data-eid="q5"><span class="lt">B</span>(x − 3)² = 4; solutions x = 5 or x = 1</button>
+        <button class="opt" data-qid="qq5" data-ok="false" data-eid="q5"><span class="lt">C</span>(x − 6)² = 31; solutions x = 6 ± √31</button>
+        <button class="opt" data-qid="qq5" data-ok="false" data-eid="q5"><span class="lt">D</span>(x − 3)² = 9; solutions x = 6 or x = 0</button>
+      </div>
+      <div class="exp" id="q5-exp">
+        <div class="et">✅ Answer: B — (x − 3)² = 4; solutions x = 5 or x = 1</div>
+        <div class="exp-steps">
+          <strong>Completing the square on x² − 6x + 5 = 0:</strong><br>
+          x² − 6x = −5<br>
+          Add (6/2)² = 9 to both sides:<br>
+          x² − 6x + 9 = −5 + 9<br>
+          (x − 3)² = 4<br>
+          x − 3 = ±2<br>
+          x = 3 + 2 = 5  or  x = 3 − 2 = 1 ✓<br>
+          <em>Factoring check: (x−5)(x−1) = 0 → x = 5 or x = 1 ✓</em>
+        </div>
+        <div class="exp-wrong">❌ <strong>Why not D ((x−3)² = 9)?</strong> When moving c = 5 to the right, we get −5, not 0. Then adding 9: −5 + 9 = 4, not 9. The right side is 4, not 9.</div>
+      </div>
+    </div>
+
+    <div id="qq6" class="qblock">
+      <div class="qnum">Quadratic Question 6 of 6 — Advanced: Roots and Coefficients</div>
+      <div class="qtxt">A quadratic function f(x) = a(x − r₁)(x − r₂) has roots at x = −2 and x = 5, and passes through the point (0, −20). What is the value of a?</div>
+      <div class="opts">
+        <button class="opt" data-qid="qq6" data-ok="false" data-eid="q6"><span class="lt">A</span>a = −2</button>
+        <button class="opt" data-qid="qq6" data-ok="true" data-eid="q6"><span class="lt">B</span>a = 2</button>
+        <button class="opt" data-qid="qq6" data-ok="false" data-eid="q6"><span class="lt">C</span>a = −10</button>
+        <button class="opt" data-qid="qq6" data-ok="false" data-eid="q6"><span class="lt">D</span>a = 4</button>
+      </div>
+      <div class="exp" id="q6-exp">
+        <div class="et">✅ Answer: B — a = 2</div>
+        <div class="exp-steps">
+          <strong>Step 1 — Write factored form:</strong> f(x) = a(x − (−2))(x − 5) = a(x + 2)(x − 5)<br>
+          <strong>Step 2 — Use the point (0, −20):</strong><br>
+          f(0) = a(0 + 2)(0 − 5) = a(2)(−5) = −10a<br>
+          Set equal to −20: −10a = −20 → <strong>a = 2</strong> ✓<br>
+          <strong>Full equation:</strong> f(x) = 2(x+2)(x−5) = 2x² − 6x − 20<br>
+          <em>Check: f(0) = −20 ✓, f(−2) = 0 ✓, f(5) = 0 ✓</em>
+        </div>
+        <div class="exp-wrong">❌ <strong>Why not a = −2?</strong> With a = −2: f(0) = −2(2)(−5) = +20, not −20. The sign matters — check by substituting the full point.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bnav">
+    <button class="bnav-btn bnav-prev" onclick="goSec('linear')">← Linear Mastery</button>
+    <span class="bnav-info">Section 3 of 7 — Quadratic Mastery</span>
+    <button class="bnav-btn bnav-next" onclick="goSec('graphs')">Next: Graph Lab →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SECTION 4: GRAPH LAB (PLOTLY — 100% FUNCTIONAL)
+══════════════════════════════════════════════════════ -->
+<div id="pane-graphs" class="pane">
+  <div class="hero">
+    <div class="badge">Interactive Graph Lab — SAT Bluebook Calculator Equivalent</div>
+    <h2>🖥️ Graph Lab: See Every Formula in Action</h2>
+    <p>Use the interactive graphing tools below to visualize linear and quadratic functions. Type any equation and see the graph instantly — exactly like you'll do on the digital SAT.</p>
+  </div>
+
+  <div class="card">
+    <h3>📈 Linear Function Explorer</h3>
+    <p style="margin-bottom:12px;">Use the presets or type your own equations. Watch how changing m and b changes the line.</p>
+    <div class="teal" style="margin-bottom:16px;">
+      <strong>🟦 SAT TIP:</strong> On the SAT Bluebook, you'll type equations into Desmos exactly like this. Practice using y = 2x + 1 format. To find the intersection of two lines, type both and tap the intersection point.
+    </div>
+    <div class="graph-controls">
+      <label>Equation 1:</label>
+      <input type="text" id="lin1" value="y = 2x + 1" placeholder="y = mx + b">
+      <label>Equation 2:</label>
+      <input type="text" id="lin2" value="y = -x + 7" placeholder="y = mx + b">
+      <button onclick="updateLinearGraph()">📊 Graph It!</button>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-left:auto;">
+        <button class="demo-btn" onclick="setLinear('y = 2x + 1','y = -x + 7')">Intersection Demo</button>
+        <button class="demo-btn" onclick="setLinear('y = 3x - 5','y = 3x + 2')">Parallel Lines</button>
+        <button class="demo-btn" onclick="setLinear('y = (4/3)x - 2','y = -(3/4)x + 4')">Perpendicular</button>
+      </div>
+    </div>
+    <div class="graph-body"><div id="linear-graph" style="height:380px;"></div></div>
+    <div id="linear-info" style="padding:12px 20px;background:#f1f5f9;border-radius:0 0 12px 12px;font-size:.9rem;color:var(--mut);">Graph will appear above. Intersection points are marked with a star ⭐</div>
+  </div>
+
+  <div class="card">
+    <h3>🔢 Quadratic Function Explorer</h3>
+    <p style="margin-bottom:12px;">Graph any quadratic and instantly see the vertex, zeros, and shape.</p>
+    <div class="teal" style="margin-bottom:16px;">
+      <strong>🟦 SAT TIP:</strong> On the SAT, when you graph a quadratic, the lowest (or highest) point is the vertex. The x-intercepts are the solutions. You can read both directly from the graph instead of doing algebra.
+    </div>
+    <div class="graph-controls">
+      <label>Quadratic:</label>
+      <input type="text" id="quad1" value="y = x^2 - 5x + 6" placeholder="y = ax^2 + bx + c">
+      <button onclick="updateQuadGraph()">📊 Graph It!</button>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-left:auto;">
+        <button class="demo-btn" onclick="setQuad('y = x^2 - 5x + 6')">Two Zeros</button>
+        <button class="demo-btn" onclick="setQuad('y = (x-4)^2')">One Zero (Tangent)</button>
+        <button class="demo-btn" onclick="setQuad('y = x^2 + 1')">No Real Zeros</button>
+        <button class="demo-btn" onclick="setQuad('y = -16*x^2 + 64*x + 5')">Projectile h(t)</button>
+        <button class="demo-btn" onclick="setQuad('y = 2*(x-3)^2 + 5')">Vertex Form</button>
+      </div>
+    </div>
+    <div class="graph-body"><div id="quadratic-graph" style="height:380px;"></div></div>
+    <div id="quad-info" style="padding:12px 20px;background:#f1f5f9;border-radius:0 0 12px 12px;font-size:.9rem;color:var(--mut);">Graph will appear above.</div>
+  </div>
+
+  <div class="card">
+    <h3>🧪 Guided Graph Challenges</h3>
+    <p style="margin-bottom:10px;">Use the graphs above to answer these questions. Type the equation in and read the answer from the graph.</p>
+    <div class="trk" style="margin-bottom:16px;"><strong>🔵 How to use:</strong> Type the equation in the quadratic explorer above. Click "Graph It!" The vertex and zeros will appear with labels. Match what you see to the questions below.</div>
+
+    <div id="gq1" class="qblock">
+      <div class="qnum">Graph Challenge 1 of 3</div>
+      <div class="qtxt">Graph y = x² − 4x − 12 in the Quadratic Explorer. What are the zeros (x-intercepts)?</div>
+      <div class="opts">
+        <button class="opt" data-qid="gq1" data-ok="false" data-eid="g1"><span class="lt">A</span>x = 2 and x = −6</button>
+        <button class="opt" data-qid="gq1" data-ok="true" data-eid="g1"><span class="lt">B</span>x = 6 and x = −2</button>
+        <button class="opt" data-qid="gq1" data-ok="false" data-eid="g1"><span class="lt">C</span>x = 4 and x = −3</button>
+        <button class="opt" data-qid="gq1" data-ok="false" data-eid="g1"><span class="lt">D</span>x = 3 and x = −4</button>
+      </div>
+      <div class="exp" id="g1-exp">
+        <div class="et">✅ Answer: B — x = 6 and x = −2</div>
+        <div class="exp-steps">
+          Factor: x² − 4x − 12 = (x − 6)(x + 2) = 0 → x = 6 or x = −2 ✓<br>
+          <em>In the graph: the parabola crosses the x-axis at x = −2 and x = 6.</em><br>
+          The vertex is at x = (6 + (−2))/2 = 2, and the min = (2)² − 4(2) − 12 = 4 − 8 − 12 = −16.
+        </div>
+      </div>
+    </div>
+
+    <div id="gq2" class="qblock">
+      <div class="qnum">Graph Challenge 2 of 3</div>
+      <div class="qtxt">Graph y = 2(x − 3)² + 5 using the Vertex Form preset. What does the graph tell you WITHOUT doing any algebra?</div>
+      <div class="opts">
+        <button class="opt" data-qid="gq2" data-ok="false" data-eid="g2"><span class="lt">A</span>The parabola crosses the x-axis at x = 3 and x = 5</button>
+        <button class="opt" data-qid="gq2" data-ok="true" data-eid="g2"><span class="lt">B</span>The vertex is at (3, 5), the parabola opens upward, and it never crosses the x-axis</button>
+        <button class="opt" data-qid="gq2" data-ok="false" data-eid="g2"><span class="lt">C</span>The vertex is at (−3, 5), and it has two real zeros</button>
+        <button class="opt" data-qid="gq2" data-ok="false" data-eid="g2"><span class="lt">D</span>The minimum value is 2, occurring at x = 3</button>
+      </div>
+      <div class="exp" id="g2-exp">
+        <div class="et">✅ Answer: B</div>
+        <div class="exp-steps">
+          From vertex form y = 2(x−3)²+5: vertex = (3, 5), a = 2 > 0 (opens up)<br>
+          Since the minimum value is 5 (> 0) and the parabola opens UP, it NEVER crosses the x-axis.<br>
+          <strong>The discriminant confirms: b²−4ac. Expanded: 2x²−12x+23. Discriminant = 144 − 4(2)(23) = 144 − 184 = −40 &lt; 0 → no real zeros ✓</strong>
+        </div>
+      </div>
+    </div>
+
+    <div id="gq3" class="qblock">
+      <div class="qnum">Graph Challenge 3 of 3</div>
+      <div class="qtxt">Graph h(t) = −16t² + 64t + 5 using the Projectile preset. From the graph, what is the maximum height and approximately when does the ball land?</div>
+      <div class="opts">
+        <button class="opt" data-qid="gq3" data-ok="false" data-eid="g3"><span class="lt">A</span>Max height 64 ft at t = 2; lands at t = 4</button>
+        <button class="opt" data-qid="gq3" data-ok="true" data-eid="g3"><span class="lt">B</span>Max height 69 ft at t = 2; lands between t = 4 and t = 5</button>
+        <button class="opt" data-qid="gq3" data-ok="false" data-eid="g3"><span class="lt">C</span>Max height 5 ft at t = 0; lands at t = 4</button>
+        <button class="opt" data-qid="gq3" data-ok="false" data-eid="g3"><span class="lt">D</span>Max height 80 ft at t = 3; lands at t = 6</button>
+      </div>
+      <div class="exp" id="g3-exp">
+        <div class="et">✅ Answer: B</div>
+        <div class="exp-steps">
+          Vertex at t = −64/(2×(−16)) = 2. h(2) = −64 + 128 + 5 = 69 feet ✓<br>
+          Ball lands when h(t) = 0: Using quadratic formula: t = [−64 ± √(4096 + 320)] / (−32) ≈ 4.08 seconds<br>
+          The graph shows the parabola's right zero between t = 4 and t = 5.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bnav">
+    <button class="bnav-btn bnav-prev" onclick="goSec('quadratic')">← Quadratic Mastery</button>
+    <span class="bnav-info">Section 4 of 7 — Graph Lab</span>
+    <button class="bnav-btn bnav-next" onclick="goSec('vocab')">Next: Vocabulary →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SECTION 5: VOCABULARY
+══════════════════════════════════════════════════════ -->
+<div id="pane-vocab" class="pane">
+  <div class="hero">
+    <div class="badge">Vocabulary — Week 3A Extended Learning</div>
+    <h2>📚 SAT Vocabulary: Fill-in-the-Blank, Analogies &amp; Synonyms</h2>
+    <p>Week 3A vocabulary goes deeper than flashcards. You'll use words in context, identify analogies (a classic SAT question type), and match synonyms. All 15 words are from the Week 3 set — applied in new, harder ways.</p>
+  </div>
+
+  <div class="card">
+    <h3>🃏 Quick Review — Flip the Cards First</h3>
+    <div class="vcards" id="vcards">
+      <div class="vc" data-vg="arg" onclick="this.classList.toggle('flip')"><div class="vw">Concede</div><div class="vp">verb · argument</div><div class="vd">To admit something is true, especially reluctantly</div><div class="ve">"She conceded that the data had limitations."</div></div>
+      <div class="vc" data-vg="arg" onclick="this.classList.toggle('flip')"><div class="vw">Refute</div><div class="vp">verb · argument</div><div class="vd">To prove wrong; to disprove</div><div class="ve">"The study refuted the popular theory."</div></div>
+      <div class="vc" data-vg="arg" onclick="this.classList.toggle('flip')"><div class="vw">Qualify</div><div class="vp">verb · argument</div><div class="vd">To add conditions or limitations to a statement</div><div class="ve">"He qualified his support, noting exceptions."</div></div>
+      <div class="vc" data-vg="arg" onclick="this.classList.toggle('flip')"><div class="vw">Corroborate</div><div class="vp">verb · argument</div><div class="vd">To confirm or support with evidence</div><div class="ve">"A second study corroborated the findings."</div></div>
+      <div class="vc" data-vg="arg" onclick="this.classList.toggle('flip')"><div class="vw">Posit</div><div class="vp">verb · argument</div><div class="vd">To put forward as a basis for argument; to assume as fact</div><div class="ve">"She posited that language shapes thought."</div></div>
+      <div class="vc" data-vg="tone" onclick="this.classList.toggle('flip')"><div class="vw">Sardonic</div><div class="vp">adjective · tone</div><div class="vd">Grimly mocking or cynical</div><div class="ve">"His sardonic comment drew uncomfortable laughter."</div></div>
+      <div class="vc" data-vg="tone" onclick="this.classList.toggle('flip')"><div class="vw">Didactic</div><div class="vp">adjective · tone</div><div class="vd">Intended to teach or moralize, often excessively</div><div class="ve">"The ending felt too didactic."</div></div>
+      <div class="vc" data-vg="tone" onclick="this.classList.toggle('flip')"><div class="vw">Ambivalent</div><div class="vp">adjective · tone</div><div class="vd">Having mixed or contradictory feelings</div><div class="ve">"She was ambivalent about the decision."</div></div>
+      <div class="vc" data-vg="tone" onclick="this.classList.toggle('flip')"><div class="vw">Pragmatic</div><div class="vp">adjective · tone</div><div class="vd">Dealing with things realistically rather than theoretically</div><div class="ve">"A pragmatic leader focuses on what works."</div></div>
+      <div class="vc" data-vg="acad" onclick="this.classList.toggle('flip')"><div class="vw">Empirical</div><div class="vp">adjective · academic</div><div class="vd">Based on observation or experience, not theory</div><div class="ve">"Empirical evidence requires real data."</div></div>
+      <div class="vc" data-vg="acad" onclick="this.classList.toggle('flip')"><div class="vw">Nuanced</div><div class="vp">adjective · academic</div><div class="vd">Characterized by subtle distinctions; not simplistic</div><div class="ve">"A nuanced argument avoids extremes."</div></div>
+      <div class="vc" data-vg="acad" onclick="this.classList.toggle('flip')"><div class="vw">Anomaly</div><div class="vp">noun · academic</div><div class="vd">Something that deviates from what is expected</div><div class="ve">"The outlier was an anomaly in the data."</div></div>
+      <div class="vc" data-vg="acad" onclick="this.classList.toggle('flip')"><div class="vw">Paradigm</div><div class="vp">noun · academic</div><div class="vd">A typical pattern or framework; worldview in a discipline</div><div class="ve">"The discovery shifted the scientific paradigm."</div></div>
+      <div class="vc" data-vg="acad" onclick="this.classList.toggle('flip')"><div class="vw">Tentative</div><div class="vp">adjective · academic</div><div class="vd">Not certain; subject to change; hesitant</div><div class="ve">"Their tentative conclusion awaited more data."</div></div>
+      <div class="vc" data-vg="acad" onclick="this.classList.toggle('flip')"><div class="vw">Catalyst</div><div class="vp">noun · academic</div><div class="vd">Something that causes or accelerates change</div><div class="ve">"The invention was a catalyst for reform."</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>✍️ Part A — Fill in the Blank (Part of Speech Required)</h3>
+    <p style="margin-bottom:6px;color:var(--mut);font-size:.93rem;">Choose the word that best fits AND matches the required part of speech shown in brackets.</p>
+
+    <div class="fib-q" id="fib1">
+      <div class="fib-sent">The researcher did not <strong>[verb]</strong> that his methodology was flawed, even when colleagues pointed out the inconsistencies. <br><em>→ The missing word should be a <strong>verb</strong> meaning "reluctantly admit."</em></div>
+      <select class="fib-select" id="fib1-ans">
+        <option value="">— Select —</option>
+        <option value="concede">concede</option>
+        <option value="posit">posit</option>
+        <option value="refute">refute</option>
+        <option value="nuanced">nuanced</option>
+      </select>
+      <button class="fib-check" onclick="checkFib(1,'concede','concede means to reluctantly admit something is true — exactly what the researcher REFUSED to do here. Posit means to put forward a claim; refute means to disprove; nuanced is an adjective, not a verb.')">Check ✓</button>
+      <div class="fib-result" id="fib1-result"></div>
+    </div>
+
+    <div class="fib-q" id="fib2">
+      <div class="fib-sent">The new field data <strong>[verb]</strong> the initial laboratory findings, confirming that the effect occurred under real-world conditions as well. <br><em>→ The missing word should be a <strong>verb</strong> meaning "confirmed with evidence."</em></div>
+      <select class="fib-select" id="fib2-ans">
+        <option value="">— Select —</option>
+        <option value="corroborated">corroborated</option>
+        <option value="tentative">tentative</option>
+        <option value="qualify">qualify</option>
+        <option value="sardonic">sardonic</option>
+      </select>
+      <button class="fib-check" onclick="checkFib(2,'corroborated','Corroborated means to confirm or support with additional evidence — perfectly matching the context of new data confirming lab findings. Tentative is an adjective. Qualify means to add limitations. Sardonic describes tone, not evidence.')">Check ✓</button>
+      <div class="fib-result" id="fib2-result"></div>
+    </div>
+
+    <div class="fib-q" id="fib3">
+      <div class="fib-sent">Rather than making sweeping statements, the sociologist offered a <strong>[adjective]</strong> analysis that distinguished between urban and suburban economic patterns. <br><em>→ The missing word should be an <strong>adjective</strong> meaning "subtle and not simplistic."</em></div>
+      <select class="fib-select" id="fib3-ans">
+        <option value="">— Select —</option>
+        <option value="didactic">didactic</option>
+        <option value="nuanced">nuanced</option>
+        <option value="anomaly">anomaly</option>
+        <option value="empirical">empirical</option>
+      </select>
+      <button class="fib-check" onclick="checkFib(3,'nuanced','Nuanced (adjective) means making subtle, careful distinctions — exactly what distinguishing between urban and suburban patterns represents. Didactic means overly preachy or instructional. Anomaly is a noun. Empirical means based on observation — related but doesn\'t mean subtle.')">Check ✓</button>
+      <div class="fib-result" id="fib3-result"></div>
+    </div>
+
+    <div class="fib-q" id="fib4">
+      <div class="fib-sent">The committee's decision was <strong>[adjective]</strong>; the final vote would not take place until additional impact studies had been reviewed. <br><em>→ The missing word should be an <strong>adjective</strong> meaning "not final; subject to change."</em></div>
+      <select class="fib-select" id="fib4-ans">
+        <option value="">— Select —</option>
+        <option value="sardonic">sardonic</option>
+        <option value="pragmatic">pragmatic</option>
+        <option value="tentative">tentative</option>
+        <option value="paradigm">paradigm</option>
+      </select>
+      <button class="fib-check" onclick="checkFib(4,'tentative','Tentative (adjective) means not fixed; subject to change — precisely what a decision pending more studies would be. Sardonic means grimly mocking (tone word). Pragmatic means realistic/practical. Paradigm is a noun, not an adjective.')">Check ✓</button>
+      <div class="fib-result" id="fib4-result"></div>
+    </div>
+
+    <div class="fib-q" id="fib5">
+      <div class="fib-sent">The discovery of antibiotic-resistant bacteria was a <strong>[noun]</strong> — it did not fit the expected pattern and required scientists to reconsider their assumptions. <br><em>→ The missing word should be a <strong>noun</strong> meaning "unexpected deviation from the norm."</em></div>
+      <select class="fib-select" id="fib5-ans">
+        <option value="">— Select —</option>
+        <option value="anomaly">anomaly</option>
+        <option value="catalyst">catalyst</option>
+        <option value="ambivalent">ambivalent</option>
+        <option value="concede">concede</option>
+      </select>
+      <button class="fib-check" onclick="checkFib(5,'anomaly','Anomaly (noun) = something that deviates from what is expected — perfectly describing a discovery that doesn\'t fit the expected pattern. Catalyst is a noun too but means something that causes change, not something unexpected. Ambivalent is an adjective. Concede is a verb.')">Check ✓</button>
+      <div class="fib-result" id="fib5-result"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🔗 Part B — Analogy Questions (SAT-Style)</h3>
+    <p style="margin-bottom:8px;">Analogies test your understanding of word <em>relationships</em>. The format is: <strong>Word A : Word B :: Word C : ?</strong> — find what ? is to Word C as Word B is to Word A.</p>
+    <div class="tip" style="margin-bottom:16px;"><strong>💡 ANALOGY STRATEGY:</strong> First, write a precise sentence connecting A and B. Then apply that EXACT same relationship to C : ?<br>Example: "CONCEDE is to admit what you LOST as _____ is to prove you WON" → REFUTE</div>
+
+    <div id="aq1" class="qblock">
+      <div class="qnum">Analogy 1 of 4</div>
+      <div class="analogy-stem">REFUTE : DISPROVE :: CORROBORATE : ___</div>
+      <div class="qtxt">Refute means to disprove something. Corroborate means to…</div>
+      <div class="opts">
+        <button class="opt" data-qid="aq1" data-ok="false" data-eid="a1"><span class="lt">A</span>Reject</button>
+        <button class="opt" data-qid="aq1" data-ok="true" data-eid="a1"><span class="lt">B</span>Confirm</button>
+        <button class="opt" data-qid="aq1" data-ok="false" data-eid="a1"><span class="lt">C</span>Question</button>
+        <button class="opt" data-qid="aq1" data-ok="false" data-eid="a1"><span class="lt">D</span>Ignore</button>
+      </div>
+      <div class="exp" id="a1-exp">
+        <div class="et">✅ Answer: B — Confirm</div>
+        <div class="exp-steps">
+          Relationship: REFUTE means to actively DISPROVE something (negative direction).<br>
+          CORROBORATE is the OPPOSITE direction — it means to actively CONFIRM or support with evidence.<br>
+          So: REFUTE:DISPROVE :: CORROBORATE:CONFIRM ✓<br>
+          They are antonyms in the "direction" of support: refute goes against; corroborate goes with.
+        </div>
+      </div>
+    </div>
+
+    <div id="aq2" class="qblock">
+      <div class="qnum">Analogy 2 of 4</div>
+      <div class="analogy-stem">SARDONIC : HUMOR :: DIDACTIC : ___</div>
+      <div class="qtxt">Sardonic describes a type of humor (dark/mocking). Didactic describes a type of…</div>
+      <div class="opts">
+        <button class="opt" data-qid="aq2" data-ok="false" data-eid="a2"><span class="lt">A</span>Evidence</button>
+        <button class="opt" data-qid="aq2" data-ok="true" data-eid="a2"><span class="lt">B</span>Teaching or moralizing</button>
+        <button class="opt" data-qid="aq2" data-ok="false" data-eid="a2"><span class="lt">C</span>Anger</button>
+        <button class="opt" data-qid="aq2" data-ok="false" data-eid="a2"><span class="lt">D</span>Uncertainty</button>
+      </div>
+      <div class="exp" id="a2-exp">
+        <div class="et">✅ Answer: B — Teaching or moralizing</div>
+        <div class="exp-steps">
+          Sardonic is an adjective describing a specific TYPE of humor (dark, mocking).<br>
+          Didactic is an adjective describing a specific TYPE of instructional intent — the intent to TEACH or moralize, often excessively.<br>
+          The relationship: SARDONIC:HUMOR = a modifier describing a type of that thing. DIDACTIC:TEACHING = same structure.
+        </div>
+      </div>
+    </div>
+
+    <div id="aq3" class="qblock">
+      <div class="qnum">Analogy 3 of 4</div>
+      <div class="analogy-stem">ANOMALY : DEVIATION :: PARADIGM : ___</div>
+      <div class="qtxt">An anomaly IS a deviation (from the expected). A paradigm IS a…</div>
+      <div class="opts">
+        <button class="opt" data-qid="aq3" data-ok="false" data-eid="a3"><span class="lt">A</span>Mistake</button>
+        <button class="opt" data-qid="aq3" data-ok="false" data-eid="a3"><span class="lt">B</span>Question</button>
+        <button class="opt" data-qid="aq3" data-ok="true" data-eid="a3"><span class="lt">C</span>Framework or model</button>
+        <button class="opt" data-qid="aq3" data-ok="false" data-eid="a3"><span class="lt">D</span>Experiment</button>
+      </div>
+      <div class="exp" id="a3-exp">
+        <div class="et">✅ Answer: C — Framework or model</div>
+        <div class="exp-steps">
+          ANOMALY is a synonym for DEVIATION (the two words mean essentially the same thing).<br>
+          PARADIGM is a synonym for FRAMEWORK or MODEL — a standard pattern or structure that organizes thinking in a field.<br>
+          The analogy type: word X = synonym for Y. ANOMALY = DEVIATION :: PARADIGM = FRAMEWORK ✓
+        </div>
+      </div>
+    </div>
+
+    <div id="aq4" class="qblock">
+      <div class="qnum">Analogy 4 of 4</div>
+      <div class="analogy-stem">PRAGMATIC : REALISTIC :: AMBIVALENT : ___</div>
+      <div class="qtxt">Pragmatic means realistic/practical in approach. Ambivalent means…</div>
+      <div class="opts">
+        <button class="opt" data-qid="aq4" data-ok="false" data-eid="a4"><span class="lt">A</span>Confident</button>
+        <button class="opt" data-qid="aq4" data-ok="true" data-eid="a4"><span class="lt">B</span>Having mixed feelings</button>
+        <button class="opt" data-qid="aq4" data-ok="false" data-eid="a4"><span class="lt">C</span>Theoretical</button>
+        <button class="opt" data-qid="aq4" data-ok="false" data-eid="a4"><span class="lt">D</span>Forceful</button>
+      </div>
+      <div class="exp" id="a4-exp">
+        <div class="et">✅ Answer: B — Having mixed feelings</div>
+        <div class="exp-steps">
+          PRAGMATIC: REALISTIC — pragmatic essentially means realistic (dealing with things as they are).<br>
+          AMBIVALENT: HAVING MIXED FEELINGS — ambivalent essentially means having contradictory or mixed feelings.<br>
+          The structure: adjective → its core definition. PRAGMATIC = REALISTIC :: AMBIVALENT = MIXED FEELINGS ✓
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🔄 Part C — Synonym Matching</h3>
+    <p style="margin-bottom:8px;">Click a vocabulary word on the left, then click its closest synonym on the right.</p>
+    <div class="grn" style="margin-bottom:16px;"><strong>🟢 TIP:</strong> Synonyms don't mean EXACTLY the same thing — they share the CORE meaning. Focus on the primary definition, not edge cases.</div>
+    <div class="syn-grid">
+      <div>
+        <div class="syn-col-hdr">📝 Vocabulary Words</div>
+        <div class="syn-item" id="sw-empirical" onclick="synClick('empirical','left')">empirical</div>
+        <div class="syn-item" id="sw-concede" onclick="synClick('concede','left')">concede</div>
+        <div class="syn-item" id="sw-catalyst" onclick="synClick('catalyst','left')">catalyst</div>
+        <div class="syn-item" id="sw-posit" onclick="synClick('posit','left')">posit</div>
+        <div class="syn-item" id="sw-tentative" onclick="synClick('tentative','left')">tentative</div>
+      </div>
+      <div>
+        <div class="syn-col-hdr">📖 Synonyms</div>
+        <div class="syn-item" id="sd-impetus" onclick="synClick('catalyst','right')">impetus / spark</div>
+        <div class="syn-item" id="sd-observational" onclick="synClick('empirical','right')">observational / evidence-based</div>
+        <div class="syn-item" id="sd-acknowledge" onclick="synClick('concede','right')">acknowledge / admit</div>
+        <div class="syn-item" id="sd-provisional" onclick="synClick('tentative','right')">provisional / uncertain</div>
+        <div class="syn-item" id="sd-hypothesize" onclick="synClick('posit','right')">hypothesize / assert</div>
+      </div>
+    </div>
+    <div id="syn-progress" style="margin-top:14px;font-size:.93rem;color:var(--mut);">Click a word on the left, then its synonym on the right. 0 / 5 matched.</div>
+  </div>
+
+  <div class="bnav">
+    <button class="bnav-btn bnav-prev" onclick="goSec('graphs')">← Graph Lab</button>
+    <span class="bnav-info">Section 5 of 7 — Vocabulary</span>
+    <button class="bnav-btn bnav-exam" onclick="goSec('exam')">Take Mini SAT 3A ✏️</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SECTION 6: MINI SAT EXAM
+══════════════════════════════════════════════════════ -->
+<div id="pane-exam" class="pane">
+  <div id="exam-start" class="ss">
+    <h2>✏️ Week 3A Mini SAT Exam</h2>
+    <p>15 questions &bull; <strong>22 minutes</strong> (SAT pace) &bull; Formula hints provided on math questions for confidence. Use them! They're your roadmap.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;max-width:500px;margin:24px auto;">
+      <div class="sc blue"><div class="n">15</div><div class="l">Questions</div></div>
+      <div class="sc grn-bg"><div class="n">22</div><div class="l">Minutes</div></div>
+      <div class="sc gold"><div class="n">3A</div><div class="l">Deep Focus</div></div>
+    </div>
+    <button class="big-btn" onclick="startExam()">🚀 Start Mini SAT 3A</button>
+  </div>
+  <div id="exam-main" style="display:none;">
+    <div class="exam-hdr">
+      <h2>✏️ Week 3A Mini SAT — In Progress</h2>
+      <div class="etimer" id="etimer">22:00</div>
+      <div class="exam-progress" id="exam-prog">Question 1 of 15</div>
+    </div>
+    <div id="exam-questions"></div>
+    <div style="text-align:center;margin-top:28px;">
+      <button id="submit-btn" onclick="submitExam()" style="padding:16px 48px;background:linear-gradient(135deg,var(--ok),#15803d);color:#fff;border:none;border-radius:14px;font-size:1.1rem;font-weight:900;cursor:pointer;display:none;">Submit Mini SAT ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     SECTION 7: RESULTS
+══════════════════════════════════════════════════════ -->
+<div id="pane-results" class="pane">
+  <div class="hero">
+    <div class="badge">Week 3A — Results &amp; Recommendations</div>
+    <h2>🏆 Your Week 3A Performance</h2>
+    <p id="results-summary">Complete the Mini SAT to see your personalized results.</p>
+  </div>
+  <div id="results-content">
+    <div class="ss">
+      <p>Complete the Mini SAT exam to unlock your detailed results and recommendations.</p>
+      <button class="big-btn" onclick="goSec('exam')">Go to Mini SAT ✏️</button>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ── STATE ──
+var xp=0,stars=0,totalQ=0,correctQ=0,answered={};
+var eTimer=null,eSeconds=22*60,eStarted=false,eSubmitted=false,eAnswers={};
+
+// ── AUDIO ──
+var audioCtx=null;
+function getAudio(){if(!audioCtx){try{audioCtx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}}return audioCtx;}
+function playTones(freqs,type){
+  var ctx=getAudio();if(!ctx)return;
+  freqs.forEach(function(f,i){
+    setTimeout(function(){
+      var o=ctx.createOscillator(),g=ctx.createGain();
+      o.type=type||'sine';o.connect(g);g.connect(ctx.destination);
+      o.frequency.setValueAtTime(f,ctx.currentTime);
+      g.gain.setValueAtTime(0.25,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.35);
+      o.start(ctx.currentTime);o.stop(ctx.currentTime+0.35);
+    },i*90);
+  });
+}
+function playCorrect(){playTones([523,659,784,1047],'sine');}
+function playWrong(){
+  var ctx=getAudio();if(!ctx)return;
+  var o=ctx.createOscillator(),g=ctx.createGain();
+  o.type='sawtooth';o.connect(g);g.connect(ctx.destination);
+  o.frequency.setValueAtTime(200,ctx.currentTime);
+  o.frequency.linearRampToValueAtTime(100,ctx.currentTime+0.4);
+  g.gain.setValueAtTime(0.25,ctx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.5);
+  o.start(ctx.currentTime);o.stop(ctx.currentTime+0.5);
+}
+
+// ── CONFETTI ──
+var cv=document.getElementById('ccanvas'),ctx2=cv?cv.getContext('2d'):null,particles=[];
+if(cv){cv.width=window.innerWidth;cv.height=window.innerHeight;window.addEventListener('resize',function(){cv.width=window.innerWidth;cv.height=window.innerHeight;});}
+function spawnConfetti(){
+  var cols=['#FF9900','#0047BA','#DB2F30','#16a34a','#7c3aed','#fbbf24'];
+  for(var i=0;i<90;i++)particles.push({x:Math.random()*cv.width,y:-20,w:6+Math.random()*10,h:4+Math.random()*7,c:cols[Math.floor(Math.random()*cols.length)],vx:(Math.random()-.5)*6,vy:2+Math.random()*5,r:Math.random()*360,rv:(Math.random()-.5)*8});
+  if(particles.length>0)requestAnimationFrame(animConf);
+}
+function animConf(){
+  if(!ctx2)return;
+  ctx2.clearRect(0,0,cv.width,cv.height);
+  particles=particles.filter(function(p){return p.y<cv.height+40;});
+  particles.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.r+=p.rv;ctx2.save();ctx2.translate(p.x,p.y);ctx2.rotate(p.r*Math.PI/180);ctx2.fillStyle=p.c;ctx2.globalAlpha=Math.min(1,1-(p.y/cv.height));ctx2.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx2.restore();});
+  if(particles.length>0)requestAnimationFrame(animConf);
+}
+function showBomb(){var b=document.getElementById('bomb');b.classList.add('show');setTimeout(function(){b.classList.remove('show');},1000);}
+
+// ── TABS ──
+document.querySelectorAll('.tab').forEach(function(t){t.addEventListener('click',function(){goSec(t.dataset.sec);});});
+function goSec(id){
+  document.querySelectorAll('.pane').forEach(function(p){p.classList.remove('on');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on');});
+  var p=document.getElementById('pane-'+id);if(p)p.classList.add('on');
+  var t=document.querySelector('.tab[data-sec="'+id+'"]');if(t)t.classList.add('on');
+  window.scrollTo(0,0);
+  if(id==='graphs'){setTimeout(initGraphs,150);}
+  updateProg();
+}
+
+// ── ANSWER HANDLING ──
+document.querySelectorAll('.opt').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var qid=btn.dataset.qid;
+    if(answered[qid])return;
+    answered[qid]=true;totalQ++;
+    var ok=btn.dataset.ok==='true';
+    var block=document.getElementById(qid);
+    var exp=document.getElementById(btn.dataset.eid+'-exp');
+    document.querySelectorAll('[data-qid="'+qid+'"]').forEach(function(b){
+      b.disabled=true;
+      if(b.dataset.ok==='true')b.classList.add('correct');
+      else if(b===btn&&!ok)b.classList.add('wrong');
+    });
+    if(ok){block.classList.add('ok');correctQ++;xp+=10;stars++;playCorrect();spawnConfetti();}
+    else{block.classList.add('bad');playWrong();showBomb();}
+    if(exp)exp.classList.add('show');
+    updateProg();
+  });
+});
+
+function updateProg(){
+  var pct=Math.min(100,Math.round(xp/200*100));
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('xp-label').textContent=xp+' XP · ⭐ '+stars;
+}
+
+// ── FORMULA CARDS ──
+function toggleFcard(el){el.classList.toggle('expanded');}
+
+// ── PLOTLY GRAPHS ──
+var graphsInited=false;
+function initGraphs(){
+  if(graphsInited)return;
+  graphsInited=true;
+  updateLinearGraph();
+  updateQuadGraph();
+}
+
+function parseSimpleEq(eq){
+  // converts simple y = ... to a function of x
+  eq=eq.replace(/\s/g,'').replace(/y=/,'').replace(/\^/g,'**').replace(/(\d)(x)/g,'$1*x');
+  return function(x){
+    try{return eval(eq.replace(/x/g,'('+x+')'));}catch(e){return null;}
+  };
+}
+
+function updateLinearGraph(){
+  var e1=document.getElementById('lin1').value;
+  var e2=document.getElementById('lin2').value;
+  var xs=[];for(var i=-10;i<=10;i+=0.1)xs.push(parseFloat(i.toFixed(2)));
+  function evalLine(eq){
+    var fn=parseSimpleEq(eq);
+    return xs.map(function(x){var v=fn(x);return(isFinite(v))?v:null;});
+  }
+  var y1=evalLine(e1),y2=evalLine(e2);
+  // Find intersection
+  var intX=null,intY=null;
+  for(var i=0;i<xs.length-1;i++){
+    var f1a=parseSimpleEq(e1)(xs[i]),f1b=parseSimpleEq(e1)(xs[i+1]);
+    var f2a=parseSimpleEq(e2)(xs[i]),f2b=parseSimpleEq(e2)(xs[i+1]);
+    if(f1a!==null&&f2a!==null){
+      var d1=f1a-f2a,d2=f1b-f2b;
+      if(d1*d2<=0&&Math.abs(d1-d2)>0.001){
+        var t=d1/(d1-d2);
+        intX=xs[i]+t*(xs[i+1]-xs[i]);
+        intY=parseSimpleEq(e1)(intX);
+        break;
+      }
+    }
+  }
+  var traces=[
+    {x:xs,y:y1,name:e1,line:{color:'#0047BA',width:3},mode:'lines'},
+    {x:xs,y:y2,name:e2,line:{color:'#DB2F30',width:3},mode:'lines'}
+  ];
+  if(intX!==null&&intY!==null){
+    traces.push({x:[intX],y:[intY],mode:'markers+text',name:'Intersection',marker:{color:'#FF9900',size:14,symbol:'star'},text:['('+intX.toFixed(2)+', '+intY.toFixed(2)+')'],textposition:'top center',textfont:{color:'#FF9900',size:13}});
+    document.getElementById('linear-info').textContent='Intersection at ('+intX.toFixed(3)+', '+intY.toFixed(3)+') — on the SAT, click this point on Desmos for your answer.';
+  } else {
+    document.getElementById('linear-info').textContent='No intersection found in range (lines may be parallel or outside the viewing window).';
+  }
+  Plotly.react('linear-graph',traces,{
+    margin:{t:20,b:40,l:50,r:20},
+    xaxis:{title:'x',zeroline:true,zerolinecolor:'#888',range:[-10,10],gridcolor:'#e5e7eb'},
+    yaxis:{title:'y',zeroline:true,zerolinecolor:'#888',range:[-15,15],gridcolor:'#e5e7eb'},
+    plot_bgcolor:'#fafbff',paper_bgcolor:'#fff',
+    showlegend:true,legend:{x:0,y:1},
+    hovermode:'closest'
+  },{responsive:true});
+}
+
+function updateQuadGraph(){
+  var eq=document.getElementById('quad1').value;
+  var xs=[];for(var i=-8;i<=12;i+=0.05)xs.push(parseFloat(i.toFixed(2)));
+  var fn=parseSimpleEq(eq);
+  var ys=xs.map(function(x){var v=fn(x);return(isFinite(v)&&Math.abs(v)<500)?v:null;});
+  // Find zeros
+  var zeros=[];
+  for(var i=0;i<xs.length-1;i++){
+    var ya=ys[i],yb=ys[i+1];
+    if(ya!==null&&yb!==null&&ya*yb<=0&&Math.abs(ya-yb)>0.0001){
+      var t=ya/(ya-yb);
+      zeros.push(xs[i]+t*(xs[i+1]-xs[i]));
+    }
+  }
+  // Find vertex
+  var vtxX=null,vtxY=null;
+  var minAbs=Infinity;
+  var validPairs=[];
+  for(var i=1;i<xs.length-1;i++){
+    if(ys[i-1]!==null&&ys[i]!==null&&ys[i+1]!==null){
+      validPairs.push({x:xs[i],y:ys[i]});
+    }
+  }
+  if(validPairs.length>0){
+    var minY=validPairs[0].y,maxY=validPairs[0].y,minIdx=0,maxIdx=0;
+    for(var i=1;i<validPairs.length;i++){
+      if(validPairs[i].y<minY){minY=validPairs[i].y;minIdx=i;}
+      if(validPairs[i].y>maxY){maxY=validPairs[i].y;maxIdx=i;}
+    }
+    if(minY<-0.1||maxY>0.1){
+      var isDown=Math.abs(maxY)>Math.abs(minY);
+      var vIdx=isDown?maxIdx:minIdx;
+      vtxX=validPairs[vIdx].x;vtxY=validPairs[vIdx].y;
+    }
+  }
+  var traces=[{x:xs,y:ys,name:eq,line:{color:'#7c3aed',width:3},mode:'lines'}];
+  if(zeros.length>0){
+    var zeroTexts=zeros.map(function(z){return 'x≈'+z.toFixed(2);});
+    traces.push({x:zeros,y:zeros.map(function(){return 0;}),mode:'markers+text',name:'Zeros',marker:{color:'#0047BA',size:12,symbol:'circle'},text:zeroTexts,textposition:'top center',textfont:{color:'#0047BA',size:12}});
+  }
+  if(vtxX!==null){
+    traces.push({x:[vtxX],y:[vtxY],mode:'markers+text',name:'Vertex',marker:{color:'#FF9900',size:16,symbol:'diamond'},text:['Vertex ('+vtxX.toFixed(1)+', '+vtxY.toFixed(1)+')'],textposition:vtxY>0?'top center':'bottom center',textfont:{color:'#FF9900',size:13,family:'Arial Black'}});
+  }
+  Plotly.react('quadratic-graph',traces,{
+    margin:{t:20,b:40,l:50,r:20},
+    xaxis:{title:'x',zeroline:true,zerolinecolor:'#888',range:[-5,12],gridcolor:'#e5e7eb'},
+    yaxis:{title:'y',zeroline:true,zerolinecolor:'#888',range:[-30,80],gridcolor:'#e5e7eb'},
+    plot_bgcolor:'#fafbff',paper_bgcolor:'#fff',
+    showlegend:true,legend:{x:0,y:1},
+    hovermode:'closest'
+  },{responsive:true});
+  var infoText='';
+  if(zeros.length===0)infoText='No real zeros (discriminant < 0). The parabola does not cross the x-axis.';
+  else if(zeros.length===1)infoText='One repeated zero at x ≈ '+zeros[0].toFixed(3)+'. Discriminant = 0 (tangent to x-axis).';
+  else infoText='Zeros at x ≈ '+zeros.map(function(z){return z.toFixed(3);}).join(' and ')+'. '+( vtxX!==null?'Vertex at ('+vtxX.toFixed(2)+', '+vtxY.toFixed(2)+').':'');
+  document.getElementById('quad-info').textContent=infoText;
+}
+
+function setLinear(e1,e2){
+  document.getElementById('lin1').value=e1;
+  document.getElementById('lin2').value=e2;
+  updateLinearGraph();
+}
+function setQuad(eq){
+  document.getElementById('quad1').value=eq;
+  updateQuadGraph();
+}
+
+// ── FILL IN BLANK ──
+function checkFib(num,correct,explanation){
+  var sel=document.getElementById('fib'+num+'-ans').value;
+  var res=document.getElementById('fib'+num+'-result');
+  if(!sel){res.className='fib-result bad';res.textContent='Please select an answer first!';return;}
+  if(sel===correct){
+    res.className='fib-result ok';
+    res.innerHTML='✅ Correct! <strong>'+correct+'</strong> — '+explanation;
+    xp+=5;stars++;updateProg();playCorrect();
+  } else {
+    res.className='fib-result bad';
+    res.innerHTML='❌ Not quite. The correct answer is <strong>'+correct+'</strong> — '+explanation;
+    playWrong();
+  }
+}
+
+// ── SYNONYM MATCHING ──
+var synSelected=null,synMatched=0;
+var synPairs={'empirical':'observational','concede':'acknowledge','catalyst':'impetus','posit':'hypothesize','tentative':'provisional'};
+// synonym right-side id mapping
+var sdMap={empirical:'observational',concede:'acknowledge',catalyst:'impetus',posit:'hypothesize',tentative:'provisional'};
+function synClick(word,side){
+  if(side==='left'){
+    document.querySelectorAll('[id^="sw-"]').forEach(function(el){if(!el.classList.contains('matched'))el.classList.remove('selected');});
+    synSelected=word;
+    var el=document.getElementById('sw-'+word);
+    if(el&&!el.classList.contains('matched'))el.classList.add('selected');
+  } else {
+    if(!synSelected)return;
+    var isCorrect=(synPairs[synSelected]===sdMap[word]);
+    if(isCorrect){
+      document.getElementById('sw-'+synSelected).classList.remove('selected');
+      document.getElementById('sw-'+synSelected).classList.add('matched');
+      var rightEl=document.getElementById('sd-'+sdMap[word]);
+      if(rightEl)rightEl.classList.add('matched');
+      synMatched++;xp+=5;stars++;updateProg();playCorrect();
+      document.getElementById('syn-progress').textContent=synMatched+' / 5 matched. '+(synMatched===5?'🎉 Perfect! All matched!':'');
+      synSelected=null;
+      if(synMatched===5){spawnConfetti();}
+    } else {
+      var rightEl=document.getElementById('sd-'+sdMap[word]);
+      if(rightEl){rightEl.classList.add('syn-wrong');setTimeout(function(){if(rightEl)rightEl.classList.remove('syn-wrong');},500);}
+      playWrong();synSelected=null;
+      document.querySelectorAll('[id^="sw-"]').forEach(function(el){if(!el.classList.contains('matched'))el.classList.remove('selected');});
+    }
+  }
+}
+
+// ── EXAM DATA ──
+var examQs=[
+  // R&W
+  {type:'rw',q:'The following passage is from a science article. "Researchers found that the antibiotics initially reduced bacterial populations by 99%. However, the surviving 1% — bacteria with a rare mutation — reproduced rapidly. Within weeks, the colony had rebounded to its original size, now composed almost entirely of resistant strains." Which choice best states the main claim supported by the evidence?',
+   hint:'',
+   opts:['Antibiotics are ineffective against all bacterial strains','Bacterial resistance can emerge quickly when resistant variants survive and reproduce','The researchers used antibiotic doses that were too low','Bacterial populations always rebound within weeks of any treatment'],
+   correct:1,exp:'The passage traces a specific mechanism: 99% killed → 1% (resistant) survives → resistant bacteria reproduce → entire colony becomes resistant. Answer B directly captures this cause-and-effect claim. A is too absolute ("all"). C is not supported. D is too broad.'},
+  {type:'rw',q:'A student claims: "Social media use always decreases academic performance." Which of the following, if true, would most directly undermine this claim?',
+   hint:'',
+   opts:['Most high school students use social media for over 3 hours daily','Studies show that collaborative social media use for study groups correlates with improved test scores','Social media companies earn billions from teenage users','Smartphone use in general has increased over the past decade'],
+   correct:1,exp:'The claim uses "always" — an absolute. B directly attacks it with a counterexample: a specific type of social media use (study groups) that IMPROVES performance. This is the most effective challenge because it provides a specific case where the claim fails.'},
+  {type:'rw',q:'Choose the transition that best completes the blank: "Some economists argue that a universal basic income would reduce poverty; __________, concerns about inflation and work disincentives remain central to the debate."',
+   hint:'',
+   opts:['Therefore','Similarly','Nevertheless','Furthermore'],
+   correct:2,exp:'The sentence moves from a positive argument (reduces poverty) to a contrasting concern (inflation, work disincentives). "Nevertheless" signals a logical contrast while acknowledging the previous point. "Therefore" shows result; "Similarly" continues the same direction; "Furthermore" adds — none signal the needed contrast.'},
+  // Linear Math
+  {type:'math',q:'Line ℓ passes through (−2, 3) and (4, 15). Which of the following is the equation of a line parallel to ℓ that passes through (0, −5)?',
+   hint:'Step 1: m = (y₂−y₁)/(x₂−x₁). Step 2: Parallel = same slope. Step 3: (0, −5) means b = −5 directly.',
+   opts:['y = 3x − 5','y = 2x − 5','y = −½x − 5','y = 2x + 5'],
+   correct:1,exp:'Slope of ℓ: (15−3)/(4−(−2)) = 12/6 = 2. Parallel slope = 2. Point (0,−5) → b = −5. Answer: y = 2x − 5.'},
+  {type:'math',q:'For what value of k does the system 3x − ky = 9 and 6x − 4y = 18 have infinitely many solutions?',
+   hint:'∞ solutions = identical equations. Divide the larger equation to match the smaller, then compare coefficients.',
+   opts:['k = 4','k = 6','k = 2','k = 3'],
+   correct:2,exp:'Divide equation 2 by 2: 3x − 2y = 9. Compare to 3x − ky = 9: k = 2. ✓'},
+  {type:'math',q:'Line p has equation 4x + 3y = 12. Line q is perpendicular to p and passes through (4, 1). What is the y-intercept of line q?',
+   hint:'Step 1: Rewrite p as y = mx+b to get slope. Step 2: Perpendicular slope = negative reciprocal. Step 3: Point-slope through (4,1), simplify.',
+   opts:['4','7','−2','1'],
+   correct:2,exp:'Slope of p = −4/3. Perp. slope = 3/4. y − 1 = (3/4)(x−4) → y = (3/4)x − 2. y-intercept = −2. ✓'},
+  // Quadratic Math
+  {type:'math',q:'What are the solutions to 2x² − 7x − 15 = 0?',
+   hint:'Quadratic Formula: x = [−b ± √(b²−4ac)] / 2a  with a=2, b=−7, c=−15. Or factor using the ac-method.',
+   opts:['x = 3 and x = −5/2','x = 5 and x = −3/2','x = −5 and x = 3/2','x = 7 and x = −15'],
+   correct:1,exp:'Factor: (x−5)(2x+3)=0 → x=5 or x=−3/2. Or formula: x=[7±13]/4 → 5 or −3/2. ✓'},
+  {type:'math',q:'The function f(x) = 2(x − 3)² + 5. What is the minimum value of f(x) and at what x does it occur?',
+   hint:'Vertex Form: f(x) = a(x−h)²+k → Vertex = (h, k). If a > 0, minimum = k.',
+   opts:['Minimum of 3 at x=5','Minimum of 5 at x=3','Minimum of 2 at x=3','Minimum of 5 at x=−3'],
+   correct:1,exp:'a=2>0 opens UP. Vertex=(3,5). Minimum value=5 at x=3. ✓'},
+  {type:'math',q:'For what value of k does x² + kx + 16 = 0 have exactly one real solution?',
+   hint:'Exactly one solution → Discriminant = 0. Set b²−4ac = 0 where a=1, b=k, c=16. Solve for k.',
+   opts:['k=4 only','k=16 or k=−16','k=8 or k=−8','k=2 or k=−2'],
+   correct:2,exp:'k²−4(1)(16)=0 → k²=64 → k=±8. ✓'},
+  {type:'math',q:'A ball height is h(t) = −16t² + 64t + 5. What is the maximum height in feet?',
+   hint:'Axis of Symmetry: t = −b/(2a). Then substitute back into h(t) to find the max height.',
+   opts:['64 feet','5 feet','80 feet','69 feet'],
+   correct:3,exp:'t=−64/(−32)=2. h(2)=−64+128+5=69 feet. ✓'},
+  // Vocab
+  {type:'vocab',q:'The author\'s tone in describing the committee\'s decision as "a predictable capitulation to special interests" is best described as:',
+   hint:'',
+   opts:['Reverent','Sardonic','Tentative','Empirical'],
+   correct:1,exp:'"Capitulation" = surrender, and "predictable" mocks the committee — this is sardonic: grimly mocking with dark humor/cynicism. Reverent is admiring. Tentative is uncertain. Empirical describes evidence-based reasoning.'},
+  {type:'vocab',q:'Select the word that best completes the blank: "The scientist did not _______ that her hypothesis was flawed, insisting instead that the anomalous data was the result of experimental error."',
+   hint:'',
+   opts:['corroborate','posit','concede','qualify'],
+   correct:2,exp:'Concede = reluctantly admit. The scientist REFUSES to admit (concede) her hypothesis is flawed. Corroborate = confirm. Posit = put forward. Qualify = add conditions. Only concede fits.'},
+  {type:'vocab',q:'REFUTE : DISPROVE :: CORROBORATE : ____',
+   hint:'Analogy: find the word that has the same relationship to CORROBORATE as DISPROVE has to REFUTE.',
+   opts:['question','confirm','analyze','reject'],
+   correct:1,exp:'Refute = disprove (they are synonyms). Corroborate = confirm (they are synonyms). The relationship is: word : its synonym. ✓'},
+  {type:'vocab',q:'As used in a passage about scientific paradigms, the word "tentative" most nearly means:',
+   hint:'',
+   opts:['definitive and settled','observational and data-based','provisional and subject to revision','bold and controversial'],
+   correct:2,exp:'Tentative means not final; uncertain; subject to change — exactly "provisional and subject to revision." Definitive is the opposite. Observational relates to empirical. Bold/controversial is not part of its meaning.'},
+  {type:'vocab',q:'A researcher who qualifies her conclusions is most likely doing which of the following?',
+   hint:'',
+   opts:['Providing stronger evidence to support her claims','Adding limitations or conditions that make her claims more precise and less absolute','Admitting that her conclusions are completely wrong','Comparing her findings to similar studies'],
+   correct:1,exp:'Qualify (argument verb) = to add conditions or limitations that make a statement less absolute. She is NOT saying she is wrong (that would be concede), not adding evidence (that would be corroborate), and not comparing (that would be juxtapose).'}
+];
+
+function startExam(){
+  document.getElementById('exam-start').style.display='none';
+  document.getElementById('exam-main').style.display='block';
+  var html='';
+  examQs.forEach(function(q,i){
+    var letters=['A','B','C','D'];
+    var hintHtml=q.hint?'<div class="formula-hint">'+q.hint+'</div>':'';
+    var typeBadge=q.type==='math'?'<span style="background:#eff6ff;color:#1e40af;padding:3px 10px;border-radius:12px;font-size:.75rem;font-weight:800;margin-right:8px;">📐 MATH</span>':(q.type==='vocab'?'<span style="background:#f5f3ff;color:#5b21b6;padding:3px 10px;border-radius:12px;font-size:.75rem;font-weight:800;margin-right:8px;">📚 VOCAB</span>':'<span style="background:#ecfdf5;color:#065f46;padding:3px 10px;border-radius:12px;font-size:.75rem;font-weight:800;margin-right:8px;">📖 R&W</span>');
+    html+='<div class="qblock" id="eq'+(i+1)+'">';
+    html+='<div class="qnum">'+typeBadge+'Exam Question '+(i+1)+' of 15</div>';
+    html+=hintHtml;
+    html+='<div class="qtxt">'+q.q+'</div>';
+    html+='<div class="opts">';
+    q.opts.forEach(function(o,j){
+      html+='<button class="opt exam-opt" data-qi="'+i+'" data-oi="'+j+'"><span class="lt">'+letters[j]+'</span>'+o+'</button>';
+    });
+    html+='</div>';
+    html+='<div class="exp" id="eexp'+(i+1)+'"><div class="et">📍 Explanation:</div>'+q.exp+'</div>';
+    html+='</div>';
+  });
+  document.getElementById('exam-questions').innerHTML=html;
+  document.querySelectorAll('.exam-opt').forEach(function(btn){
+    btn.addEventListener('click',function(){handleExamAnswer(btn);});
+  });
+  // Check show submit after all answered
+  startExamTimer();
+  checkExamDone();
+}
+
+function handleExamAnswer(btn){
+  var qi=parseInt(btn.dataset.qi);
+  if(eAnswers[qi]!==undefined)return;
+  var oi=parseInt(btn.dataset.oi);
+  eAnswers[qi]=oi;
+  var block=document.getElementById('eq'+(qi+1));
+  var exp=document.getElementById('eexp'+(qi+1));
+  document.querySelectorAll('[data-qi="'+qi+'"]').forEach(function(b){
+    b.disabled=true;
+    if(parseInt(b.dataset.oi)===examQs[qi].correct)b.classList.add('correct');
+    else if(b===btn&&oi!==examQs[qi].correct)b.classList.add('wrong');
+  });
+  if(oi===examQs[qi].correct){block.classList.add('ok');playCorrect();spawnConfetti();}
+  else{block.classList.add('bad');playWrong();showBomb();}
+  if(exp)exp.classList.add('show');
+  checkExamDone();
+}
+
+function checkExamDone(){
+  if(Object.keys(eAnswers).length===examQs.length){
+    document.getElementById('submit-btn').style.display='inline-block';
+  }
+}
+
+var examTimerInterval=null;
+function startExamTimer(){
+  if(examTimerInterval)return;
+  eSeconds=22*60;
+  examTimerInterval=setInterval(function(){
+    eSeconds--;
+    var m=Math.floor(eSeconds/60),s=eSeconds%60;
+    var tEl=document.getElementById('etimer');
+    tEl.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+    if(eSeconds<=300)tEl.classList.add('warn');
+    if(eSeconds<=0){clearInterval(examTimerInterval);submitExam();}
+  },1000);
+}
+
+function submitExam(){
+  if(eSubmitted)return;eSubmitted=true;
+  if(examTimerInterval)clearInterval(examTimerInterval);
+  var correct=0,rw=0,rwC=0,math=0,mathC=0,voc=0,vocC=0;
+  examQs.forEach(function(q,i){
+    var chosen=eAnswers[i];
+    if(chosen===q.correct)correct++;
+    if(q.type==='rw'){rw++;if(chosen===q.correct)rwC++;}
+    if(q.type==='math'){math++;if(chosen===q.correct)mathC++;}
+    if(q.type==='vocab'){voc++;if(chosen===q.correct)vocC++;}
+  });
+  var pct=Math.round(correct/15*100);
+  var estScore=Math.round(400+(pct/100)*800);
+  xp+=correct*15;stars+=correct;updateProg();
+  if(correct>=12)spawnConfetti();
+  document.getElementById('results-summary').textContent=correct+' out of 15 correct ('+pct+'%) — Estimated SAT contribution: ~'+estScore+' pts';
+  var recos='';
+  if(rwC<3)recos+='<div class="reco-item"><strong>📖 Reading &amp; Writing:</strong> '+rwC+'/'+rw+' — Review transition logic and command of evidence strategies.</div>';
+  if(mathC<(math))recos+='<div class="reco-item"><strong>📐 Math:</strong> '+mathC+'/'+math+' — Re-visit the Formula Guide and try re-doing missed problems step by step.</div>';
+  if(vocC<voc)recos+='<div class="reco-item"><strong>📚 Vocabulary:</strong> '+vocC+'/'+voc+' — Re-read the analogy and fill-in-blank sections, focusing on argument verbs (concede, refute, qualify, corroborate).</div>';
+  if(!recos)recos='<div class="reco-item" style="border-color:var(--ok)"><strong>🌟 Excellent across all areas!</strong> You\'re ready to advance to Week 4 content.</div>';
+  document.getElementById('results-content').innerHTML=
+    '<div class="res-grid">'+
+    '<div class="res-card"><div class="res-score">'+correct+'/15</div><div class="res-lbl">Total Correct</div></div>'+
+    '<div class="res-card"><div class="res-score">'+rwC+'/'+rw+'</div><div class="res-lbl">Reading &amp; Writing</div></div>'+
+    '<div class="res-card"><div class="res-score">'+mathC+'/'+math+'</div><div class="res-lbl">Math</div></div>'+
+    '<div class="res-card"><div class="res-score">'+vocC+'/'+voc+'</div><div class="res-lbl">Vocabulary</div></div>'+
+    '<div class="res-card"><div class="res-score">~'+estScore+'</div><div class="res-lbl">SAT Score Est.</div></div>'+
+    '</div>'+
+    '<div class="divider"></div>'+
+    '<h3 style="color:var(--bl);margin-bottom:16px;">📋 Personalized Recommendations</h3>'+
+    recos;
+  goSec('results');
+}
+</script>
+</body>
+</html>
